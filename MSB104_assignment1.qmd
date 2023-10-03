@@ -18,7 +18,10 @@ library(modelr)
 library(grid)
 library(ggplotify)
 library(vtable)
+library(dplyr)
 ```
+
+# **Data Acquisition**
 
 ```{r}
 #| label: Datasets
@@ -28,14 +31,29 @@ nama_10r_3gdp <- read_delim("nama_10r_3gdp.tsv",
     delim = "\t", escape_double = FALSE, 
     na = "NA", trim_ws = TRUE, 
     show_col_types = FALSE)
-```
 
-```{r}
-#| label: Datasets
-#| echo: false
-library(readr)
 demo_r_pjanaggr3 <- read_delim("demo_r_pjanaggr3.tsv", 
     delim = "\t", escape_double = FALSE, 
     na = "NA", trim_ws = TRUE,
     show_col_types = FALSE)
+```
+
+```{r}
+gdp <- nama_10r_3gdp
+```
+
+```{r}
+str(gdp)
+```
+
+```{r}
+countries_to_keep <- c("FI", "DE", "RO")
+filtered_data <- gdp %>%
+  filter(substr(`unit,geo\\time`, 9, 10) %in% countries_to_keep)
+selected_columns <- filtered_data %>%
+  select(`unit,geo\\time`, `2000`:`2020`)
+```
+
+```{r}
+gdp_DE_FI_RO <- selected_columns 
 ```
