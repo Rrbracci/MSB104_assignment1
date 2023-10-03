@@ -39,21 +39,18 @@ demo_r_pjanaggr3 <- read_delim("demo_r_pjanaggr3.tsv",
 ```
 
 ```{r}
+# Change file name nama_10r_3gdp to gdp
 gdp <- nama_10r_3gdp
-```
-
-```{r}
-str(gdp)
-```
-
-```{r}
+# Filter sorted by provided following contries: Finland (FI), Germany (DE) & Romania (RO). Furthermore, filter selected period 2000:2020.
 countries_to_keep <- c("FI", "DE", "RO")
 filtered_data <- gdp %>%
   filter(substr(`unit,geo\\time`, 9, 10) %in% countries_to_keep)
 selected_columns <- filtered_data %>%
   select(`unit,geo\\time`, `2000`:`2020`)
+# Renamed file from selected_colums to gdp_DE_FI_RO
+gdp_DE_FI_RO <- selected_columns 
 ```
 
 ```{r}
-gdp_DE_FI_RO <- selected_columns 
+str(demo_r_pjanaggr3)
 ```
