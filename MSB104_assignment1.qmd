@@ -24,6 +24,8 @@ library(dplyr)
 
 # **Data Acquisition**
 
+## Population per sub-region in DE, FI & RO
+
 ```{r}
 # Downloaded file for population in DE (Germany), FI (Finland) and RO (Romania). Furthermore, we load up the file i RStudio by import the file in Library(readr). Moreover, we commended RStudio to read the file "demo_r_pjanaggr3_page_linear_csv". Additionally, we implemented the function na = "NA" for RStudio to read the missing values. Lastly, we added the function "show_col_types = FALSE" to prevent RStudio displaying the column data types while reading the file. 
 library(readr)
@@ -36,15 +38,23 @@ demo_r_pjanaggr3_page_linear_csv <- read_csv("demo_r_pjanaggr3_page_linear.csv.g
 DE_FI_RO_pop <- demo_r_pjanaggr3_page_linear_csv |>
 	filter(str_sub
 	       (geo, start = 1L, end = 2L) %in% c("DE", "FI", "RO")) |>
-	select(year = TIME_PERIOD, geo, pop = OBS_VALUE)
+	select(Year = TIME_PERIOD, Sub_regions = geo, Population = OBS_VALUE)
 ```
 
 ```{r}
-
+#| paged.print: false
+# Table with overview of population per region in the countries of Germany, Finland and Romania.
+DE_FI_RO_pop |> 
+  print(
+    n = 5 ,
+    width = 100 ,
+    )
 ```
 
+## GDP per sub-region in DE, FI & RO
+
 ```{r}
-# Downloaded file for population in DE (Germany), FI (Finland) and RO (Romania). Furthermore, we load up the file i RStudio by import the file in Library(readr). Moreover, we commended RStudio to read the file "nama_10r_3gdp_page_linear_csv". Additionally, we implemented the function na = "NA" for RStudio to read the missing values. Lastly, we added the function "show_col_types = FALSE" to prevent RStudio displaying the column data types while reading the file. 
+# Downloaded file for GDP in DE (Germany), FI (Finland) and RO (Romania). Furthermore, we load up the file i RStudio by import the file in Library(readr). Moreover, we commended RStudio to read the file "nama_10r_3gdp_page_linear_csv". Additionally, we implemented the function na = "NA" for RStudio to read the missing values. Lastly, we added the function "show_col_types = FALSE" to prevent RStudio displaying the column data types while reading the file. 
 library(readr)
 nama_10r_3gdp_page_linear_csv <- read_csv("nama_10r_3gdp_page_linear.csv.gz", 
     na = "NA", show_col_types = FALSE)
@@ -55,5 +65,17 @@ nama_10r_3gdp_page_linear_csv <- read_csv("nama_10r_3gdp_page_linear.csv.gz",
 DE_FI_RO_gdp <- nama_10r_3gdp_page_linear_csv |>
 	filter(str_sub
 	       (geo, start = 1L, end = 2L) %in% c("DE", "FI", "RO")) |>
-	select(year = TIME_PERIOD, geo, gdp = OBS_VALUE)
+	select(Year = TIME_PERIOD, Sub_regions = geo, GDP = OBS_VALUE)
 ```
+
+```{r}
+#| paged.print: false
+# Table with overview of GPD per region in the countries of Germany, Finland and Romania.
+DE_FI_RO_gdp |> 
+  print(
+    n = 5 ,
+    width = 100 ,
+    )
+```
+
+## Overview of presented datasets and structure
