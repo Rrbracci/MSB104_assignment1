@@ -35,3 +35,16 @@ DE_FI_RO_pop <- demo_r_pjanaggr3_page_linear_csv |>
 	       (geo, start = 1L, end = 2L) %in% c("DE", "FI", "RO")) |>
 	select(year = TIME_PERIOD, geo, pop = OBS_VALUE)
 ```
+
+```{r}
+library(readr)
+nama_10r_3gdp_page_linear_csv <- read_csv("nama_10r_3gdp_page_linear.csv.gz", 
+    na = "NA", show_col_types = FALSE)
+```
+
+```{r}
+DE_FI_RO_gdp <- nama_10r_3gdp_page_linear_csv |>
+	filter(str_sub
+	       (geo, start = 1L, end = 2L) %in% c("DE", "FI", "RO")) |>
+	select(year = TIME_PERIOD, geo, gdp = OBS_VALUE)
+```
