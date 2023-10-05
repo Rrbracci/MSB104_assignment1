@@ -79,3 +79,23 @@ DE_FI_RO_gdp |>
 ```
 
 ## Overview of presented datasets and structure
+
+# **GDP per Capita Calculation**
+
+```{r}
+# Merging data
+merged_data <- merge(DE_FI_RO_pop, DE_FI_RO_gdp) 
+```
+
+```{r}
+merged_data <- merged_data |> 
+  mutate(Yi = GDP/Population)
+```
+
+```{r}
+summary(merged_data)
+```
+
+```{r}
+
+```
