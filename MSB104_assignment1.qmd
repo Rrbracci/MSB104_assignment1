@@ -112,7 +112,8 @@ ungroup() # to remove grouping
 ```{r}
 merged_temp <- merged_temp %>%
   mutate(id_nuts2 = substr(Sub_regions, 1,4),
-          id_nuts0 = substr(Sub_regions, 1,2))
+          id_nuts0 = substr(Sub_regions, 1,2)) %>%
+select(Year, Sub_regions, Population, GDP, GDP_per_capita, id_nuts0, id_nuts2, gini_n2)
 ```
 
 ```{r}
@@ -120,3 +121,10 @@ merged_temp <- merged_temp %>%
 #for all
 w.cv(data$gdp)
 ```
+
+Colapsing dataset by id.
+Function "first(nuts2, year)
+
+Look at the region that has 0.
+It means that the gini is very low and means it is missing data.
+Might be an outlier and we maybe have to deleting it.
