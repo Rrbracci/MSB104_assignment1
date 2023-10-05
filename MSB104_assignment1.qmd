@@ -106,14 +106,13 @@ merged_data <- merged_data %>%
 merged_temp <- merged_data %>%
 group_by(id_nuts2, Year) %>%
 mutate(gini_n2 = gini.wtd(GDP, Population)*100000) %>%
-  ungroup()
+ungroup() # to remove grouping
 ```
 
 ```{r}
-data <- data %>%
-  mutate_(id_nuts3 = geo,
-          id_nuts2 = substr(geo, 1,4),
-          id_nuts0 = substr(geo, 1,2)
+merged_temp <- merged_temp %>%
+  mutate(id_nuts2 = substr(Sub_regions, 1,4),
+          id_nuts0 = substr(Sub_regions, 1,2))
 ```
 
 ```{r}
