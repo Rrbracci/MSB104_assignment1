@@ -20,6 +20,7 @@ library(grid)
 library(ggplotify)
 library(vtable)
 library(dplyr)
+library(dineq)
 ```
 
 # **Data Acquisition**
@@ -89,13 +90,34 @@ merged_data <- merge(DE_FI_RO_pop, DE_FI_RO_gdp)
 
 ```{r}
 merged_data <- merged_data |> 
-  mutate(Yi = GDP/Population)
+  mutate(GDP_per_capita = GDP/Population)
 ```
 
 ```{r}
 summary(merged_data)
 ```
 
-```{r}
+GINI
 
+```{r}
+merged_data <- merged_data %>%
+  mutate(id_nuts2 = substr(Sub_regions,1,4))
+#Gen Nuts 2 id
+merged_temp <- merged_data %>%
+group_by(id_nuts2, Year) %>%
+mutate(gini_n2 = gini.wtd(GDP, Population)*100000) %>%
+  ungroup()
+```
+
+```{r}
+data <- data %>%
+  mutate_(id_nuts3 = geo,
+          id_nuts2 = substr(geo, 1,4),
+          id_nuts0 = substr(geo, 1,2)
+```
+
+```{r}
+#gen weighted gini
+#for all
+w.cv(data$gdp)
 ```
