@@ -23,9 +23,11 @@ library(dplyr)
 library(dineq)
 ```
 
-# **Data Acquisition**
+# Sub-national GDP and GDP per Capita
 
-## Population per sub-region in DE, FI & RO
+## **Data Acquisition**
+
+### Population per sub-region in DE, FI & RO
 
 ```{r}
 # Downloaded file for population in DE (Germany), FI (Finland) and RO (Romania). Furthermore, we load up the file i RStudio by import the file in Library(readr). Moreover, we commended RStudio to read the file "demo_r_pjanaggr3_page_linear_csv". Additionally, we implemented the function na = "NA" for RStudio to read the missing values. Lastly, we added the function "show_col_types = FALSE" to prevent RStudio displaying the column data types while reading the file. 
@@ -79,7 +81,7 @@ DE_FI_RO_gdp |>
     )
 ```
 
-## Overview of presented datasets and structure
+### Overview of presented datasets and structure
 
 The first dataset we downloaded from Eurostat was **demo_r_pjanaggr3,** which contains population data from Europe.
 In our case, we have selected population data from Finland, Germany and Romania.
@@ -93,7 +95,7 @@ The following dataset we downloaded from Eurostat was the **nama_10r_3gdp datase
 Furthermore, this dataset is also broken down to NUTS level 3 which focus on GDP data from the sub-regions in Finland, Germany and Romania.
 According to @Eurostat_2023, GDP (Gross domsetsic product) at market prices is defined as the final result of the production activity of resident producer units (@Eurostat_2023).
 
-# **GDP per Capita Calculation**
+## **GDP per Capita Calculation**
 
 ```{r}
 # Merging data
@@ -114,7 +116,7 @@ merged_data <- merged_data |>
 summary(merged_data)
 ```
 
-## Calculation steps
+### Calculation steps
 
 The first step in calculating GDP per capita for each sub-region, was to merge the two datasets of GDP and population.
 We named the new dataset merged_data.
@@ -122,9 +124,75 @@ Furthermore, we started with transforming the new dataset by creating a new colu
 We calculated GDP per capita by using the formula GDP divided by Population.
 Lastly, we provided the summary function to get an overview of various summary statistics and information for each column in the merged_data dataset.
 
+## Descriptive Analysis:
+
+```{r}
+GDP_DE_nuts2 <- merged_data %>%
+  filter(
+    str_sub(Sub_regions, start = 1L, end = 2L) == "DE"
+  ) |> 
+  mutate(
+    id_nuts2 = str_sub(Sub_regions, start = 1L, end = 4L)
+  ) |> 
+  group_by(id_nuts2, Year) %>%
+  summarise(
+    GDP_per_capita_nuts2_DE = sum(1000000*GDP)/sum(Population)
+    ) 
+```
+
+```{r}
+#| cap-location: bottom
+#| fig-cap: "De GNP per år."
+GDP_DE_nuts2 |>
+  filter(
+    as.integer(str_sub(id_nuts2, start = 3L, end = 4L)) >= 0
+    )  |>
+  filter(
+  as.integer(str_sub(id_nuts2, start = 3L, end = 4L)) < 50
+  ) |> 
+  ggplot(mapping = aes(
+    x = Year, 
+    y = GDP_per_capita_nuts2_DE, 
+    colour = id_nuts2)
+    ) +
+  #geom_smooth(se = FALSE, snap = 0.9)
+  geom_line()
+```
+
+```{r}
+desc_stat_DE_nuts2 <- GDP_DE_nuts2 |> 
+  group_by(Year) |> 
+  summarise(
+    min_GDP_each_year = min(GDP_per_capita_nuts2_DE),
+    max_GDP_each_year = max(GDP_per_capita_nuts2_DE),
+    median_GDP_each_year = median(GDP_per_capita_nuts2_DE),
+    mean_GDP_each_year = mean(GDP_per_capita_nuts2_DE),
+    sd_GDP_each_year = sd(GDP_per_capita_nuts2_DE),
+    var_GDP_each_year = sd_GDP_each_year^2
+  )
+```
+
+```{r}
+GDP_DE_nuts2 |> 
+  ungroup() |> 
+  select(Year, GDP_pc = GDP_per_capita_nuts2_DE) |> 
+  st(group = "Year", group.long = TRUE, 
+     summ = c('notNA(x)','mean(x)', 'median(x)', 
+              'sd(x)','min(x)','max(x)'),
+              
+     )
+```
+
+```{r}
+GDP_DE_nuts2 |> 
+  filter(Year == 2005) |> 
+  select(-Year) |> 
+  st()
+```
+
 # Regional inequity
 
-## Litterature review
+## Literature review
 
 Regional inequality shows variation in regional GDP per capita, and according to @Lessmann_and_Seidel_2017, regional inequality occurs when one region experiences different assumptions than other regions.
 Moreover, when the level of economic development is high, there is significant regional inequality @Lessmann_and_Seidel_2017 .
@@ -146,7 +214,7 @@ Lastly, @Lessmann_and_Seidel_2017 state that an area where ethnic groups dominat
 Based on the research conducted by @Lessmann_and_Seidel_2017, considering regional inequities is essential since it can influence economic outcomes.
 The research shows many examples of high- and low-income countries experiencing unbalanced regional development that results in income inequality @Lessmann_and_Seidel_2017.
 
-# GINI
+## GINI Coefficient Calculation
 
 ```{r}
 merged_data <- merged_data %>%
@@ -172,3 +240,12 @@ select(Year, Sub_regions, Population, GDP, GDP_per_capita, id_nuts0, id_nuts2, g
 
 Nullverdier: Kan skyldes kun en enkel observasjon og derfor slår det ut i null.
 Det kan også skyldes manglende data.
+
+## Data presentation
+
+## Discussion
+
+```{r}
+#| echo: false
+# siste
+```
