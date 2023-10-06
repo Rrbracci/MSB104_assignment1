@@ -89,23 +89,41 @@ merged_data <- merge(DE_FI_RO_pop, DE_FI_RO_gdp)
 ```
 
 ```{r}
+# Step one: choose dataset for transformation. 
+# Step two: mutate and create new column (GDP_per_capita)
 merged_data <- merged_data |> 
-  mutate(GDP_per_capita = GDP/Population)
+  mutate(
+    GDP_per_capita = 1000000 * GDP/Population
+    )
 ```
 
 ```{r}
+# Summary for viewing dataset. 
 summary(merged_data)
 ```
 
-GINI
+## Calculation steps
+
+The first step in calculating GDP per capita for each sub-region, was to merge the two datasets of GDP and population.
+We named the new dataset merged_data.
+Furthermore, we started with transforming the new dataset by creating a new column called GDP_per_capita.
+We calculated GDP per capita by using the formula GDP divided by Population.
+Lastly, we provided the summary function to get an overview of various summary statistics and information for each column in the merged_data dataset.
+
+# GINI
 
 ```{r}
 merged_data <- merged_data %>%
-  mutate(id_nuts2 = substr(Sub_regions,1,4))
-#Gen Nuts 2 id
+  mutate(
+    id_nuts2 = substr(Sub_regions,1,4),
+    id_nuts0 = substr(Sub_regions,1,2)
+    ) %>%
+  ungroup() # to remove grouping
+#Gen Nuts 0 id
 merged_temp <- merged_data %>%
 group_by(id_nuts2, Year) %>%
-mutate(gini_n2 = gini.wtd(GDP, Population)*100000) %>%
+#mutate(gini_n2 = gini.wtd(GDP, Population)*100000) %>%
+mutate(gini_n2 = gini.wtd(GDP_per_capita)) %>%
 ungroup() # to remove grouping
 ```
 
@@ -115,16 +133,3 @@ merged_temp <- merged_temp %>%
           id_nuts0 = substr(Sub_regions, 1,2)) %>%
 select(Year, Sub_regions, Population, GDP, GDP_per_capita, id_nuts0, id_nuts2, gini_n2)
 ```
-
-```{r}
-#gen weighted gini
-#for all
-w.cv(data$gdp)
-```
-
-Colapsing dataset by id.
-Function "first(nuts2, year)
-
-Look at the region that has 0.
-It means that the gini is very low and means it is missing data.
-Might be an outlier and we maybe have to deleting it.
