@@ -126,6 +126,16 @@ Lastly, we provided the summary function to get an overview of various summary s
 
 ## Descriptive Analysis:
 
+Sjekk DEA dataene!!!
+
+Beskrive metadatamangler
+
+(Beskrive millioneuro i GDP)
+
+Beskrive finanskrisen og Covid i grafen.
+
+### Germany
+
 ```{r}
 GDP_DE_nuts2 <- merged_data %>%
   filter(
@@ -188,6 +198,80 @@ GDP_DE_nuts2 |>
   filter(Year == 2005) |> 
   select(-Year) |> 
   st()
+```
+
+### Finland
+
+```{r}
+GDP_FI_nuts2 <- merged_data %>%
+  filter(
+    str_sub(Sub_regions, start = 1L, end = 2L) == "FI"
+  ) |> 
+  mutate(
+    id_nuts2 = str_sub(Sub_regions, start = 1L, end = 4L)
+  ) |> 
+  group_by(id_nuts2, Year) %>%
+  summarise(
+    GDP_per_capita_nuts2_FI = sum(1000000*GDP)/sum(Population)
+    ) 
+```
+
+```{r}
+#| cap-location: bottom
+#| fig-cap: "De GNP per år."
+GDP_FI_nuts2 |>
+  filter(
+    as.integer(str_sub(id_nuts2, start = 3L, end = 4L)) >= 0
+    )  |>
+  filter(
+  as.integer(str_sub(id_nuts2, start = 3L, end = 4L)) < 50
+  ) |> 
+  ggplot(mapping = aes(
+    x = Year, 
+    y = GDP_per_capita_nuts2_FI, 
+    colour = id_nuts2)
+    ) +
+  #geom_smooth(se = FALSE, snap = 0.9)
+  geom_line()
+```
+
+### Romania
+
+```{r}
+GDP_RO_nuts2 <- merged_data %>%
+  filter(
+    str_sub(Sub_regions, start = 1L, end = 2L) == "RO"
+  ) |> 
+  mutate(
+    id_nuts2 = str_sub(Sub_regions, start = 1L, end = 4L)
+  ) |> 
+  group_by(id_nuts2, Year) %>%
+  summarise(
+    GDP_per_capita_nuts2_RO = sum(1000000*GDP)/sum(Population)
+    ) 
+```
+
+```{r}
+#| cap-location: bottom
+#| fig-cap: "De GNP per år."
+GDP_RO_nuts2 |>
+  filter(
+    as.integer(str_sub(id_nuts2, start = 3L, end = 4L)) >= 0
+    )  |>
+  filter(
+  as.integer(str_sub(id_nuts2, start = 3L, end = 4L)) < 50
+  ) |> 
+  ggplot(mapping = aes(
+    x = Year, 
+    y = GDP_per_capita_nuts2_RO, 
+    colour = id_nuts2)
+    ) +
+  #geom_smooth(se = FALSE, snap = 0.9)
+  geom_line()
+```
+
+```{r}
+
 ```
 
 # Regional inequity
