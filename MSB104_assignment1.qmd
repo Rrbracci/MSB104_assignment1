@@ -81,6 +81,18 @@ DE_FI_RO_gdp |>
 
 ## Overview of presented datasets and structure
 
+The first dataset we downloaded from Eurostat was **demo_r_pjanaggr3,** which contains population data from Europe.
+In our case, we have selected population data from Finland, Germany and Romania.
+According to @Eurostat_2021, the dataset of demography is a set of statistical numbers each country in Europe sends yearly to Eurostat by 31 December of the following calendar year.
+Furthermore, the definition of "population" is, according to @Eurostat_2021, all persons having their residences in a member state, including all live births and deaths during the year when the statistical numbers are heading to Eurostat.
+Moreover, the demographic data at a regional level are separated into different groups named NUTS, which are defined as nomenclature for territorial units for statistics (@Eurostat_2021).
+The purpose of the NUTS function is to subdivide the territory of the European Union into 104 regions at NUTS level 1 and break it down by to 281 at NUTS level 2 and 1348 at NUTS level 3 (@Eurostat_2021).
+In this paper, we have focused on the numbers of NUTS 3 level, but the dataset containing population data has been broken down by sex and broad age groups (0-14, 15-64 and 65 or more).
+
+The following dataset we downloaded from Eurostat was the **nama_10r_3gdp dataset**.
+Furthermore, this dataset is also broken down to NUTS level 3 which focus on GDP data from the sub-regions in Finland, Germany and Romania.
+According to @Eurostat_2023, GDP (Gross domsetsic product) at market prices is defined as the final result of the production activity of resident producer units (@Eurostat_2023).
+
 # **GDP per Capita Calculation**
 
 ```{r}
@@ -110,6 +122,30 @@ Furthermore, we started with transforming the new dataset by creating a new colu
 We calculated GDP per capita by using the formula GDP divided by Population.
 Lastly, we provided the summary function to get an overview of various summary statistics and information for each column in the merged_data dataset.
 
+# Regional inequity
+
+## Litterature review
+
+Regional inequality shows variation in regional GDP per capita, and according to @Lessmann_and_Seidel_2017, regional inequality occurs when one region experiences different assumptions than other regions.
+Moreover, when the level of economic development is high, there is significant regional inequality @Lessmann_and_Seidel_2017 .
+According to @williamson_1965, one crucial difference that leads to regional inequality is the access to natural resources.
+Regions rich in natural resources grow faster than regions in the rest of the country, which results in inequality.
+Furthermore, openness is another critical element of why regional inequality occurs.
+A region with more significant access to the international trade market than other regions with limited access will gain more from international trade if international trade costs decrease @Lessmann_and_Seidel_2017
+
+Moreover, openness can also contribute to foreign investors investing in a more attractive region, e.g., access to natural resources.
+In the end, this led to an imbalance in regional equality.
+Additionally, mobility can provide regional inequality through differences in transport costs from one region to another @Lessmann_and_Seidel_2017. The differences in transport costs are caused, e.g. by fuel consumption per kilometre.
+ 
+
+Furthermore, another significant element creating regional inequality is bureaucracy, policy and stability in a country @Lessmann_and_Seidel_2017. Civil war affects the country's balance of regional equality and creates different assumptions.
+An example is regions in a country that experience increasing aid.
+Receiving assistance from foreign aid organisations creates inequality.
+Lastly, @Lessmann_and_Seidel_2017 state that an area where ethnic groups dominate as a minority can result in regional inequity.
+
+Based on the research conducted by @Lessmann_and_Seidel_2017, considering regional inequities is essential since it can influence economic outcomes.
+The research shows many examples of high- and low-income countries experiencing unbalanced regional development that results in income inequality @Lessmann_and_Seidel_2017.
+
 # GINI
 
 ```{r}
@@ -133,3 +169,6 @@ merged_temp <- merged_temp %>%
           id_nuts0 = substr(Sub_regions, 1,2)) %>%
 select(Year, Sub_regions, Population, GDP, GDP_per_capita, id_nuts0, id_nuts2, gini_n2)
 ```
+
+Nullverdier: Kan skyldes kun en enkel observasjon og derfor slår det ut i null.
+Det kan også skyldes manglende data.
