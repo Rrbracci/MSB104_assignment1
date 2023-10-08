@@ -164,8 +164,12 @@ GDP_DE_nuts2 <- merged_data %>%
 ```
 
 ```{r}
+# First step is to place the location of the figure caption and name it.
+# Secondly, we filter GDP_DE_nuts2 to contain integer starting from 3 and ending with 4. Moreover, in this dataset we only contain vales larger or equal to 0, but less than 50.
+# Thirdly, we represent the data in GPD_DE_nuts2 by mapping them in a plot using ggplot, where the x-axis represents year and y-axis represents GPD_per_capita. Furthermore the colour is determined by id_nuts2.
+# Fourthly, we exclude the geom_smooth and instead use geom_line since this gives a accurate description of our data from Germany.
 #| cap-location: bottom
-#| fig-cap: "De GNP per år."
+#| fig-cap: "GDP per year."
 GDP_DE_nuts2 |>
   filter(
     as.integer(str_sub(id_nuts2, start = 3L, end = 4L)) >= 0
@@ -183,6 +187,8 @@ GDP_DE_nuts2 |>
 ```
 
 ```{r}
+# Creating new dataset called desc_stat_DE_nuts2 and grouping it by year. 
+# Using the summarise() function to summarize various statistics for each year. 
 desc_stat_DE_nuts2 <- GDP_DE_nuts2 |> 
   group_by(Year) |> 
   summarise(
@@ -196,13 +202,13 @@ desc_stat_DE_nuts2 <- GDP_DE_nuts2 |>
 ```
 
 ```{r}
+# To ensure the table do not contain previous grouping, we use the ungroup function. Moreover, we select desirable variable. Additional, the st fuction is utilised to compute summary statistics for the selected columns. Lastly, the summ-fuction specifies the summary statistics to calculate
 GDP_DE_nuts2 |> 
   ungroup() |> 
   select(Year, GDP_pc = GDP_per_capita_nuts2_DE) |> 
   st(group = "Year", group.long = TRUE, 
      summ = c('notNA(x)','mean(x)', 'median(x)', 
               'sd(x)','min(x)','max(x)'),
-              
      )
 ```
 
@@ -212,6 +218,10 @@ GDP_DE_nuts2 |>
   select(-Year) |> 
   st()
 ```
+
+#### Description of the numbers from German sub-regions
+
+####  
 
 ### Finland
 
