@@ -112,17 +112,25 @@ merged_data <- merged_data |>
 ```
 
 ```{r}
-# Summary for viewing dataset. 
-summary(merged_data)
+# Creating new dataset only containing population, GDP and GDP per capita
+merged_data_GDP_PC <- merged_data %>%
+  select(Population, GDP, GDP_per_capita)
+```
+
+```{r}
+# Summary for viewing the new dataset. 
+summary(merged_data_GDP_PC) 
 ```
 
 ### Calculation steps
 
+![](images/387521025_674930251254296_7967018015334033524_n.png){fig-alt="Formula of GDP per capita"}
+
 The first step in calculating GDP per capita for each sub-region, was to merge the two datasets of GDP and population.
 We named the new dataset merged_data.
 Furthermore, we started with transforming the new dataset by creating a new column called GDP_per_capita.
-We calculated GDP per capita by using the formula GDP divided by Population.
-Lastly, we provided the summary function to get an overview of various summary statistics and information for each column in the merged_data dataset.
+We calculated GDP per capita by using the formula GDP divided by Population, but to view an more presentable numbers, we multiplied the formula with 1 000 000 since we want to provide GDP per capita in million EURO.
+Lastly, we created a another new dataset called merged_data_GDP_PC and provided the summary function to get an overview of various summary statistics and information for each column in the merged_data_GDP_PC dataset.
 
 ## Descriptive Analysis:
 
@@ -137,6 +145,11 @@ Beskrive finanskrisen og Covid i grafen.
 ### Germany
 
 ```{r}
+# Created new dataset called GDP_DE_nuts2.
+# Filtered sub-regions from Germany by using str_sub to extract a substring from the Sub_regions columns containing the letters DE for Germany.
+# Creating new column called id_nuts2 to save the new data for calculating Gini coefficient, for presenting the numbers of regional inequity in Germany at NUTS2 level.
+# Next step is to group the numbers of NUTS2 level sorted by the the code of the region in NUTS2 level and year.
+# Finally summarise the Gini coefficient numbers of each German region in NUTS2 level by multiplying 1 000 000 with GDP divided by population. 
 GDP_DE_nuts2 <- merged_data %>%
   filter(
     str_sub(Sub_regions, start = 1L, end = 2L) == "DE"
@@ -287,10 +300,12 @@ A region with more significant access to the international trade market than oth
 
 Moreover, openness can also contribute to foreign investors investing in a more attractive region, e.g., access to natural resources.
 In the end, this led to an imbalance in regional equality.
-Additionally, mobility can provide regional inequality through differences in transport costs from one region to another @Lessmann_and_Seidel_2017. The differences in transport costs are caused, e.g. by fuel consumption per kilometre.
+Additionally, mobility can provide regional inequality through differences in transport costs from one region to another @Lessmann_and_Seidel_2017.
+The differences in transport costs are caused, e.g. by fuel consumption per kilometre.
  
 
-Furthermore, another significant element creating regional inequality is bureaucracy, policy and stability in a country @Lessmann_and_Seidel_2017. Civil war affects the country's balance of regional equality and creates different assumptions.
+Furthermore, another significant element creating regional inequality is bureaucracy, policy and stability in a country @Lessmann_and_Seidel_2017.
+Civil war affects the country's balance of regional equality and creates different assumptions.
 An example is regions in a country that experience increasing aid.
 Receiving assistance from foreign aid organisations creates inequality.
 Lastly, @Lessmann_and_Seidel_2017 state that an area where ethnic groups dominate as a minority can result in regional inequity.
@@ -321,6 +336,8 @@ merged_temp <- merged_temp %>%
           id_nuts0 = substr(Sub_regions, 1,2)) %>%
 select(Year, Sub_regions, Population, GDP, GDP_per_capita, id_nuts0, id_nuts2, gini_n2)
 ```
+
+![](images/387325388_332262946048979_5064907706589960466_n.png){fig-alt="Formula of GINI coefficient"}
 
 Nullverdier: Kan skyldes kun en enkel observasjon og derfor slår det ut i null.
 Det kan også skyldes manglende data.
