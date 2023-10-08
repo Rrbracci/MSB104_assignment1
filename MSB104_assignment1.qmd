@@ -221,7 +221,7 @@ GDP_DE_nuts2 |>
 
 #### Description of the numbers from German sub-regions
 
-####  
+#### 
 
 ### Finland
 
@@ -326,31 +326,47 @@ The research shows many examples of high- and low-income countries experiencing 
 ## GINI Coefficient Calculation
 
 ```{r}
+# Creating two new columns in the dataset merged_data called id_nuts2 and id_nuts0. Secondly, extracting the first four characters of the Sub_regions column and assigns it to the new id_nuts2 column, as well as the first two characters and assigns them to the new id_nuts0 column. Lastly, remove grouping. 
 merged_data <- merged_data %>%
   mutate(
     id_nuts2 = substr(Sub_regions,1,4),
     id_nuts0 = substr(Sub_regions,1,2)
     ) %>%
-  ungroup() # to remove grouping
-#Gen Nuts 0 id
+  ungroup()
+# Creating new dataset called merged_temp and group the data by id_nuts2 and Year. Use mutate to calculate a new column called gini_n2 using the gini.wtd function, which compute a weighted Gini coefficient based on GDP per capita. Finally, remove grouping. 
 merged_temp <- merged_data %>%
-group_by(id_nuts2, Year) %>%
-#mutate(gini_n2 = gini.wtd(GDP, Population)*100000) %>%
-mutate(gini_n2 = gini.wtd(GDP_per_capita)) %>%
-ungroup() # to remove grouping
+  group_by(id_nuts2, Year) %>%
+  mutate(gini_n2 = gini.wtd(GDP_per_capita)) %>%
+  ungroup()
 ```
 
 ```{r}
+# Creating two new columns called id_nuts2 and id_nuts0. Secondly, extracting the first four characters of the Sub_regions column and assigns it to the new id_nuts2 column, as well as the first two characters and assigns them to the new id_nuts0 column. Lastly, choosing columns to be retained listed within the select function.
 merged_temp <- merged_temp %>%
   mutate(id_nuts2 = substr(Sub_regions, 1,4),
           id_nuts0 = substr(Sub_regions, 1,2)) %>%
-select(Year, Sub_regions, Population, GDP, GDP_per_capita, id_nuts0, id_nuts2, gini_n2)
+  select(Year, Sub_regions, Population, GDP, GDP_per_capita, id_nuts0, id_nuts2, gini_n2)
 ```
+
+To calculate the population-weighted Gini coefficient for GDP for each European NUTS2 level region within Germany, Finland and Romania, we used the data on the GDP and population for the different regions and associated countries.
+The Gini coefficient measures income or wealth inequality within a population @IMF_n.d. In this case, we want to calculate the Gini coefficient for GDP, which is a measure of economic inequality.
+We calculated the Gini coefficient using the following formula:
 
 ![](images/387325388_332262946048979_5064907706589960466_n.png){fig-alt="Formula of GINI coefficient"}
 
-Nullverdier: Kan skyldes kun en enkel observasjon og derfor slår det ut i null.
-Det kan også skyldes manglende data.
+We want to calculate the weighted average of the Gini coefficients based on the population of each region or country.
+We do this by calculating a new column called gini_n2 using mutate, and applying the gini.wtd function, which compute a weighted Gini coefficient based on GDP per capita.
+
+The population-weighted Gini coefficient provides a measure of economic inequality across all our regions and associated countries, taking into account their respective populations @IMF_n.d. A Gini coefficient close to 0 indicates a more equal distribution of income or wealth among the population.
+In societies with low Gini coefficients, there is relatively less income or wealth inequality, and resources are more evenly distributed among individuals or households.
+These societies tend to have a larger middle class and fewer people living in poverty or extreme wealth @IMF_n.d.
+
+A Gini coefficient close to 1 signifies a high level of income or wealth inequality.
+In societies with high Gini coefficients, a significant portion of the income or wealth is concentrated among a small percentage of the population, leading to pronounced disparities.
+These societies may have a large gap between the rich and the poor, with some individuals or households having substantially more resources than others @IMF_n.d.
+
+The zero values occur as a result of regions like in Germany where the regions is actually an foreign embassy, army base or offshore energy prodution with no permanent residence.
+This means they do not have any GDP per capita @Eurostat_2021.
 
 ## Data presentation
 
