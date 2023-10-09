@@ -179,7 +179,7 @@ DEz2SOUTH <- c("DE11", "DE12", "DE13", "DE14", "DE21", "DE22", "DE23", "DE24", "
 #| fig-cap: "GDP per year."
 GDP_DE_nuts2 |>
   filter(
-    id_nuts2 %in% DEz1
+    id_nuts2 %in% DEz1NORTH
   ) |> 
   ggplot(mapping = aes(
     x = Year, 
@@ -193,7 +193,7 @@ GDP_DE_nuts2 |>
 ```{r}
 GDP_DE_nuts2 |>
   filter(
-    id_nuts2 %in% DEz2
+    id_nuts2 %in% DEz2SOUTH
   ) |> 
   ggplot(mapping = aes(
     x = Year, 
