@@ -411,7 +411,7 @@ merged_temp <- merged_temp %>%
 ```
 
 To calculate the population-weighted Gini coefficient for GDP for each European NUTS2 level region within Germany, Finland and Romania, we used the data on the GDP and population for the different regions and associated countries.
-The Gini coefficient measures income or wealth inequality within a population [@imf_n_d].
+The Gini coefficient measures income or wealth inequality within a population [@imfnd].
 In this case, we want to calculate the Gini coefficient for GDP, which is a measure of economic inequality.
 We calculated the Gini coefficient using the following formula:
 
@@ -445,6 +445,16 @@ Gini_stat_DE_nuts2 <- merged_temp %>%
     sd_Gini_each_year = sd(gini_n2),
     var_Gini_each_year = sd_Gini_each_year^2
   )
+```
+
+```{r}
+Gini_stat_DE_nuts2 |> 
+  ungroup() |> 
+  select(Year, min_Gini_each_year, max_Gini_each_year, median_Gini_each_year, mean_Gini_each_year, sd_Gini_each_year, var_Gini_each_year) |> 
+  st(group = "Year", group.long = TRUE, 
+     summ = c('notNA(x)','mean(x)', 'median(x)', 
+              'sd(x)','min(x)','max(x)'),
+     )
 ```
 
 ```{r}
