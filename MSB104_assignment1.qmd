@@ -244,12 +244,17 @@ GDP_DE_nuts2 |>
 ### Finland
 
 ```{r}
+# Created new dataset called GDP_FI_nuts2.
+# Filtered sub-regions from Finland by using str_sub to extract a substring from the Sub_regions columns containing the letters FI for Finland
+# Creating new column called id_nuts2 to save the new data for calculating Gini coefficient, for presenting the numbers of regional inequity in Finland at NUTS2 level.
+# Next step is to group the numbers of NUTS2 level sorted by the the code of the region in NUTS2 level and year.
+# Finally summarise the Gini coefficient numbers of each Finnish region in NUTS2 level by multiplying 1 000 000 with GDP divided by population. 
 GDP_FI_nuts2 <- merged_data %>%
   filter(
     str_sub(Sub_regions, start = 1L, end = 2L) == "FI"
   ) |> 
   mutate(
-    id_nuts2 = str_sub(Sub_regions, start = 1L, end = 4L)
+    id_nuts2 = fct(str_sub(Sub_regions, start = 1L, end = 4L))
   ) |> 
   group_by(id_nuts2, Year) %>%
   summarise(
@@ -258,15 +263,13 @@ GDP_FI_nuts2 <- merged_data %>%
 ```
 
 ```{r}
+# First step is to place the location of the figure caption and name it.
+# Secondly, we filter GDP_FI_nuts2 to contain integer starting from 3 and ending with 4. Moreover, in this dataset we only contain vales larger or equal to 0, but less than 50.
+# Thirdly, we represent the data in GPD_FI_nuts2 by mapping them in a plot using ggplot, where the x-axis represents year and y-axis represents GPD_per_capita. Furthermore the colour is determined by id_nuts2.
+# Fourthly, we exclude the geom_smooth and instead use geom_line since this gives a accurate description of our data from Finland
 #| cap-location: bottom
-#| fig-cap: "De GNP per år."
+#| fig-cap: "GDP per year."
 GDP_FI_nuts2 |>
-  filter(
-    as.integer(str_sub(id_nuts2, start = 3L, end = 4L)) >= 0
-    )  |>
-  filter(
-  as.integer(str_sub(id_nuts2, start = 3L, end = 4L)) < 50
-  ) |> 
   ggplot(mapping = aes(
     x = Year, 
     y = GDP_per_capita_nuts2_FI, 
@@ -276,15 +279,46 @@ GDP_FI_nuts2 |>
   geom_line()
 ```
 
+```{r}
+# Creating new dataset called desc_stat_FI_nuts2 and grouping it by year. 
+# Using the summarise() function to summarize various statistics for each year. 
+desc_stat_FI_nuts2 <- GDP_FI_nuts2 |> 
+  group_by(Year) |> 
+  summarise(
+    min_GDP_each_year = min(GDP_per_capita_nuts2_FI),
+    max_GDP_each_year = max(GDP_per_capita_nuts2_FI),
+    median_GDP_each_year = median(GDP_per_capita_nuts2_FI),
+    mean_GDP_each_year = mean(GDP_per_capita_nuts2_FI),
+    sd_GDP_each_year = sd(GDP_per_capita_nuts2_FI),
+    var_GDP_each_year = sd_GDP_each_year^2
+  )
+```
+
+```{r}
+# To ensure the table do not contain previous grouping, we use the ungroup function. Moreover, we select desirable variable. Additional, the st fuction is utilised to compute summary statistics for the selected columns. Lastly, the summ-fuction specifies the summary statistics to calculate
+GDP_FI_nuts2 |> 
+  ungroup() |> 
+  select(Year, GDP_pc = GDP_per_capita_nuts2_FI) |> 
+  st(group = "Year", group.long = TRUE, 
+     summ = c('notNA(x)','mean(x)', 'median(x)', 
+              'sd(x)','min(x)','max(x)'),
+     )
+```
+
 ### Romania
 
 ```{r}
+# Created new dataset called GDP_RO_nuts2.
+# Filtered sub-regions from Romania by using str_sub to extract a substring from the Sub_regions columns containing the letters RO for Romania
+# Creating new column called id_nuts2 to save the new data for calculating Gini coefficient, for presenting the numbers of regional inequity in Romania at NUTS2 level.
+# Next step is to group the numbers of NUTS2 level sorted by the the code of the region in NUTS2 level and year.
+# Finally summarise the Gini coefficient numbers of each Romanian region in NUTS2 level by multiplying 1 000 000 with GDP divided by population. 
 GDP_RO_nuts2 <- merged_data %>%
   filter(
     str_sub(Sub_regions, start = 1L, end = 2L) == "RO"
   ) |> 
   mutate(
-    id_nuts2 = str_sub(Sub_regions, start = 1L, end = 4L)
+    id_nuts2 = fct(str_sub(Sub_regions, start = 1L, end = 4L))
   ) |> 
   group_by(id_nuts2, Year) %>%
   summarise(
@@ -293,15 +327,13 @@ GDP_RO_nuts2 <- merged_data %>%
 ```
 
 ```{r}
+# First step is to place the location of the figure caption and name it.
+# Secondly, we filter GDP_RO_nuts2 to contain integer starting from 3 and ending with 4. Moreover, in this dataset we only contain vales larger or equal to 0, but less than 50.
+# Thirdly, we represent the data in GPD_RO_nuts2 by mapping them in a plot using ggplot, where the x-axis represents year and y-axis represents GPD_per_capita. Furthermore the colour is determined by id_nuts2.
+# Fourthly, we exclude the geom_smooth and instead use geom_line since this gives a accurate description of our data from Romania
 #| cap-location: bottom
-#| fig-cap: "De GNP per år."
+#| fig-cap: "GDP per year."
 GDP_RO_nuts2 |>
-  filter(
-    as.integer(str_sub(id_nuts2, start = 3L, end = 4L)) >= 0
-    )  |>
-  filter(
-  as.integer(str_sub(id_nuts2, start = 3L, end = 4L)) < 50
-  ) |> 
   ggplot(mapping = aes(
     x = Year, 
     y = GDP_per_capita_nuts2_RO, 
@@ -312,7 +344,29 @@ GDP_RO_nuts2 |>
 ```
 
 ```{r}
+# Creating new dataset called desc_stat_RO_nuts2 and grouping it by year. 
+# Using the summarise() function to summarize various statistics for each year. 
+desc_stat_RO_nuts2 <- GDP_RO_nuts2 |> 
+  group_by(Year) |> 
+  summarise(
+    min_GDP_each_year = min(GDP_per_capita_nuts2_RO),
+    max_GDP_each_year = max(GDP_per_capita_nuts2_RO),
+    median_GDP_each_year = median(GDP_per_capita_nuts2_RO),
+    mean_GDP_each_year = mean(GDP_per_capita_nuts2_RO),
+    sd_GDP_each_year = sd(GDP_per_capita_nuts2_RO),
+    var_GDP_each_year = sd_GDP_each_year^2
+  )
+```
 
+```{r}
+# To ensure the table do not contain previous grouping, we use the ungroup function. Moreover, we select desirable variable. Additional, the st fuction is utilised to compute summary statistics for the selected columns. Lastly, the summ-fuction specifies the summary statistics to calculate
+GDP_RO_nuts2 |> 
+  ungroup() |> 
+  select(Year, GDP_pc = GDP_per_capita_nuts2_RO) |> 
+  st(group = "Year", group.long = TRUE, 
+     summ = c('notNA(x)','mean(x)', 'median(x)', 
+              'sd(x)','min(x)','max(x)'),
+     )
 ```
 
 # Regional inequity
