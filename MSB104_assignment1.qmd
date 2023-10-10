@@ -241,20 +241,52 @@ GDP_DE_nuts2 |>
 
 #### Description of the numbers from German sub-regions
 
-As mentioned earlier, the data include numbers from NUTS3 level
+In order to achieve a presentable figure showing GDP per year for the German sub-regions, we decided to divide the data into Northern and Southern Germany.
+This prevented the data from becoming overly clustered and improved our ability to interpret the graphs.
+The first figure presents data for North Germany, and the second figure presents data for South Germany.
 
-Som beskrevet over inneholder tallene fra NUTS3 level disse dataene.
-Vi bestemte oss for å dele Tyskland inn i Nord og Sør pga.
-(se comments).
+In the figure presenting GDP per year for sub-regions in North Germany, we can observe one graph in particular on the top.
+This graph also correspond to the max value seen in the table containing summary statistics.
+This is the graph for region DE60, which is the code for Hamburg.
+In 2000, Hamburg had a GDP per capita 45 659.50
 
-Gå gjennom outliers ved å bruke Espen sitt tilsendte dokument.
-F.eks.
-beskrive Wolfsbrug, Hamburg etc.
-Beskriv de laveste, si noe om hvorfor dette er tilfelle.
+2020:
 
-Beskrive finanskrisen og Covid i grafen.
+DE60, Hamburg, 64 366.49
 
-Beskrive deskriptiv statistikk.
+DE91, Braunschweig (Wolfsburg), 48 156.71
+
+DE50, Bremen, 47 816.62
+
+According to the datasets we used from Eurostat to calculate the GDP per capita, the sub-region in Germany with the highest GDP per capita was the sub-region coded DE913.
+According to the report "Statistical regions in the European Union and partner countries NUTS and statistical regions 2021", this region is Wolfsburg, Kreisfreie Stadt **(SOURCE).** In 2019, each inhabitant stood for an economic output of about 196 010.74 euros.
+Wolfsburg is the home of the car manufacturer group Volkswagen, which gives the local population job opportunities.
+**Weernink (1997)** states that Volkswagen employees enjoy higher average wages, contributing to a higher GDP per capita, contributing to investment in education, infrastructure and health care, which enhances the overall quality of life for residents.
+On the other hand, the sub-region with the lowest GDP per capita was Südwestpfalz (DEB3K).
+This might be due to the limitation of industries that provide employees with high productivity or wages.
+Another reasons can be income inequality, lack of investments (**SOURCE**)
+
+**Gå gjennom outliers ved å bruke Espen sitt tilsendte dokument. F.eks. beskrive Wolfsbrug, Hamburg etc. Beskriv de laveste, si noe om hvorfor dette er tilfelle. Koble opp mot deskriptiv statistikk.**
+
+**Si noe om finanskrisen og Covid i grafen.**
+
+Remote or rural areas may have fewer economic opportunities and lower GDP per capita compared to urban centers.
+
+Infrastructure and Education: Insufficient infrastructure and educational resources can hinder economic development.
+Lack of access to quality education and transportation infrastructure can limit a region's ability to attract businesses and create high-paying jobs.
+
+Income Inequality: Even if there are pockets of wealth in a region, high levels of income inequality can result in a low average GDP per capita.
+This means that a significant portion of the population earns a relatively low income.
+
+Government Policies: Government policies, taxation, and public investments can influence regional economic development.
+Regions with supportive policies and investments in education, healthcare, and infrastructure tend to perform better economically.
+
+Demographic Factors: The age and size of the population can also impact GDP per capita.
+Regions with an aging population may have higher healthcare costs and lower labor force participation, affecting economic output.
+
+Historical Factors: Historical events, such as wars or economic crises, can have long-lasting effects on a region's economy.
+To understand the specific reasons behind Südwestpfalz's low GDP per capita, it would be necessary to conduct a detailed economic analysis and consider current economic conditions, local policies, and other relevant factors.
+Local and regional governments, as well as economic development agencies, often work to address these challenges and promote economic growth in lower-income areas.
 
 ### Finland
 
