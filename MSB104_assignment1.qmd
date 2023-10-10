@@ -30,6 +30,7 @@ library(dineq)
 ### Population per sub-region in DE, FI & RO
 
 ```{r}
+#| echo: false
 # Downloaded file for population in DE (Germany), FI (Finland) and RO (Romania). Furthermore, we load up the file i RStudio by import the file in Library(readr). Moreover, we commended RStudio to read the file "demo_r_pjanaggr3_page_linear_csv". Additionally, we implemented the function na = "NA" for RStudio to read the missing values. Lastly, we added the function "show_col_types = FALSE" to prevent RStudio displaying the column data types while reading the file. 
 library(readr)
 demo_r_pjanaggr3_page_linear_csv <- read_csv("demo_r_pjanaggr3_page_linear.csv.gz", 
@@ -37,6 +38,7 @@ demo_r_pjanaggr3_page_linear_csv <- read_csv("demo_r_pjanaggr3_page_linear.csv.g
 ```
 
 ```{r}
+#| echo: false
 # First step was to rename the file for the assigned countries (DE, FI & RO). Furthermore, we utilized the function filter with str_sub considering a better overview of relevant dataset. Lastly, we were interested in population in every sub_regionals in the relevant contries. To receive and organise the relevant data, the function "Select" was used.  
 DE_FI_RO_pop <- demo_r_pjanaggr3_page_linear_csv |>
 	filter(str_sub
@@ -45,6 +47,7 @@ DE_FI_RO_pop <- demo_r_pjanaggr3_page_linear_csv |>
 ```
 
 ```{r}
+#| echo: false
 #| paged.print: false
 # Table with overview of population per region in the countries of Germany, Finland and Romania.
 DE_FI_RO_pop |> 
@@ -57,6 +60,7 @@ DE_FI_RO_pop |>
 ## GDP per sub-region in DE, FI & RO
 
 ```{r}
+#| echo: false
 # Downloaded file for GDP in DE (Germany), FI (Finland) and RO (Romania). Furthermore, we load up the file i RStudio by import the file in Library(readr). Moreover, we commended RStudio to read the file "nama_10r_3gdp_page_linear_csv". Additionally, we implemented the function na = "NA" for RStudio to read the missing values. Lastly, we added the function "show_col_types = FALSE" to prevent RStudio displaying the column data types while reading the file. 
 library(readr)
 nama_10r_3gdp_page_linear_csv <- read_csv("nama_10r_3gdp_page_linear.csv.gz", 
@@ -64,6 +68,7 @@ nama_10r_3gdp_page_linear_csv <- read_csv("nama_10r_3gdp_page_linear.csv.gz",
 ```
 
 ```{r}
+#| echo: false
 # First step was to rename the file for the assigned countries (DE, FI & RO). Furthermore, we utilized the function filter with str_sub considering a better overview of relevant dataset. Lastly, we were interested in population in every sub_regionals in the relevant contries. To receive and organise the relevant data, the function "Select" was used.  
 DE_FI_RO_gdp <- nama_10r_3gdp_page_linear_csv |>
 	filter(str_sub
@@ -72,6 +77,7 @@ DE_FI_RO_gdp <- nama_10r_3gdp_page_linear_csv |>
 ```
 
 ```{r}
+#| echo: false
 #| paged.print: false
 # Table with overview of GPD per region in the countries of Germany, Finland and Romania.
 DE_FI_RO_gdp |> 
@@ -98,11 +104,13 @@ According to @eurostat2023, GDP (Gross domsetsic product) at market prices is de
 ## **GDP per Capita Calculation**
 
 ```{r}
+#| echo: false
 # Merging data
 merged_data <- merge(DE_FI_RO_pop, DE_FI_RO_gdp) 
 ```
 
 ```{r}
+#| echo: false
 # Step one: choose dataset for transformation. 
 # Step two: mutate and create new column (GDP_per_capita)
 merged_data <- merged_data |> 
@@ -112,12 +120,14 @@ merged_data <- merged_data |>
 ```
 
 ```{r}
+#| echo: false
 # Creating new dataset only containing population, GDP and GDP per capita
 merged_data_GDP_PC <- merged_data %>%
   select(Population, GDP, GDP_per_capita)
 ```
 
 ```{r}
+#| echo: false
 # Summary for viewing the new dataset. 
 summary(merged_data_GDP_PC) 
 ```
@@ -129,18 +139,15 @@ summary(merged_data_GDP_PC)
 The first step in calculating GDP per capita for each sub-region, was to merge the two datasets of GDP and population.
 We named the new dataset merged_data.
 Furthermore, we started with transforming the new dataset by creating a new column called GDP_per_capita.
-We calculated GDP per capita by using the formula GDP divided by Population, but to view an more presentable numbers, we multiplied the formula with 1 000 000 since we want to provide GDP per capita in million EURO.
+We calculated GDP per capita by using the formula GDP divided by Population, but to view more presentable numbers, we multiplied the formula with 1 000 000 since we want to provide GDP per capita in million EURO.
 Lastly, we created a another new dataset called merged_data_GDP_PC and provided the summary function to get an overview of various summary statistics and information for each column in the merged_data_GDP_PC dataset.
 
 ## Descriptive Analysis:
 
-Beskrive metadatamangler
-
-Beskrive finanskrisen og Covid i grafen.
-
 ### Germany
 
 ```{r}
+#| echo: false
 # Created new dataset called GDP_DE_nuts2.
 # Filtered sub-regions from Germany by using str_sub to extract a substring from the Sub_regions columns containing the letters DE for Germany.
 # Creating new column called id_nuts2 to save the new data for calculating Gini coefficient, for presenting the numbers of regional inequity in Germany at NUTS2 level.
@@ -160,6 +167,7 @@ GDP_DE_nuts2 <- merged_data %>%
 ```
 
 ```{r}
+#| echo: false
 # Since Germany contains many regions, we have deceided to present them in two new values.
 # DEz1North and DEz2SOUTH are the two values where we have devided Germany in South and North. 
 # Created a combined value consisting of the Northern and Southern part of Germany.
@@ -169,6 +177,7 @@ DE <- c(DEz1NORTH, DEz2SOUTH)
 ```
 
 ```{r}
+#| echo: false
 # First step is to place the location of the figure caption and name it.
 # Secondly, we filter GDP_DE_nuts2 to contain integer starting from 3 and ending with 4. Moreover, in this dataset we only contain vales larger or equal to 0, but less than 50.
 # Thirdly, we represent the data in GPD_DE_nuts2 by mapping them in a plot using ggplot, where the x-axis represents year and y-axis represents GPD_per_capita. Furthermore the colour is determined by id_nuts2.
@@ -188,6 +197,7 @@ GDP_DE_nuts2 |>
 ```
 
 ```{r}
+#| echo: false
 # Duplicating the same steps for Southern Germany as for the Northern part. 
 GDP_DE_nuts2 |>
   filter(
@@ -202,6 +212,7 @@ GDP_DE_nuts2 |>
 ```
 
 ```{r}
+#| echo: false
 # Creating new dataset called desc_stat_DE_nuts2 and grouping it by year. 
 # Using the summarise() function to summarize various statistics for each year. 
 desc_stat_DE_nuts2 <- GDP_DE_nuts2 |> 
@@ -217,6 +228,7 @@ desc_stat_DE_nuts2 <- GDP_DE_nuts2 |>
 ```
 
 ```{r}
+#| echo: false
 # To ensure the table do not contain previous grouping, we use the ungroup function. Moreover, we select desirable variable. Additional, the st fuction is utilised to compute summary statistics for the selected columns. Lastly, the summ-fuction specifies the summary statistics to calculate
 GDP_DE_nuts2 |> 
   ungroup() |> 
@@ -229,11 +241,25 @@ GDP_DE_nuts2 |>
 
 #### Description of the numbers from German sub-regions
 
-#### 
+As mentioned earlier, the data include numbers from NUTS3 level
+
+Som beskrevet over inneholder tallene fra NUTS3 level disse dataene.
+Vi bestemte oss for å dele Tyskland inn i Nord og Sør pga.
+(se comments).
+
+Gå gjennom outliers ved å bruke Espen sitt tilsendte dokument.
+F.eks.
+beskrive Wolfsbrug, Hamburg etc.
+Beskriv de laveste, si noe om hvorfor dette er tilfelle.
+
+Beskrive finanskrisen og Covid i grafen.
+
+Beskrive deskriptiv statistikk.
 
 ### Finland
 
 ```{r}
+#| echo: false
 # Created new dataset called GDP_FI_nuts2.
 # Filtered sub-regions from Finland by using str_sub to extract a substring from the Sub_regions columns containing the letters FI for Finland
 # Creating new column called id_nuts2 to save the new data for calculating Gini coefficient, for presenting the numbers of regional inequity in Finland at NUTS2 level.
@@ -253,6 +279,7 @@ GDP_FI_nuts2 <- merged_data %>%
 ```
 
 ```{r}
+#| echo: false
 # First step is to place the location of the figure caption and name it.
 # Secondly, we filter GDP_FI_nuts2 to contain integer starting from 3 and ending with 4. Moreover, in this dataset we only contain vales larger or equal to 0, but less than 50.
 # Thirdly, we represent the data in GPD_FI_nuts2 by mapping them in a plot using ggplot, where the x-axis represents year and y-axis represents GPD_per_capita. Furthermore the colour is determined by id_nuts2.
@@ -269,6 +296,7 @@ GDP_FI_nuts2 |>
 ```
 
 ```{r}
+#| echo: false
 # Creating new dataset called desc_stat_FI_nuts2 and grouping it by year. 
 # Using the summarise() function to summarize various statistics for each year. 
 desc_stat_FI_nuts2 <- GDP_FI_nuts2 |> 
@@ -284,6 +312,7 @@ desc_stat_FI_nuts2 <- GDP_FI_nuts2 |>
 ```
 
 ```{r}
+#| echo: false
 # To ensure the table do not contain previous grouping, we use the ungroup function. Moreover, we select desirable variable. Additional, the st fuction is utilised to compute summary statistics for the selected columns. Lastly, the summ-fuction specifies the summary statistics to calculate
 GDP_FI_nuts2 |> 
   ungroup() |> 
@@ -297,6 +326,7 @@ GDP_FI_nuts2 |>
 ### Romania
 
 ```{r}
+#| echo: false
 # Created new dataset called GDP_RO_nuts2.
 # Filtered sub-regions from Romania by using str_sub to extract a substring from the Sub_regions columns containing the letters RO for Romania
 # Creating new column called id_nuts2 to save the new data for calculating Gini coefficient, for presenting the numbers of regional inequity in Romania at NUTS2 level.
@@ -316,6 +346,7 @@ GDP_RO_nuts2 <- merged_data %>%
 ```
 
 ```{r}
+#| echo: false
 # First step is to place the location of the figure caption and name it.
 # Secondly, we filter GDP_RO_nuts2 to contain integer starting from 3 and ending with 4. Moreover, in this dataset we only contain vales larger or equal to 0, but less than 50.
 # Thirdly, we represent the data in GPD_RO_nuts2 by mapping them in a plot using ggplot, where the x-axis represents year and y-axis represents GPD_per_capita. Furthermore the colour is determined by id_nuts2.
@@ -332,6 +363,7 @@ GDP_RO_nuts2 |>
 ```
 
 ```{r}
+#| echo: false
 # Creating new dataset called desc_stat_RO_nuts2 and grouping it by year. 
 # Using the summarise() function to summarize various statistics for each year. 
 desc_stat_RO_nuts2 <- GDP_RO_nuts2 |> 
@@ -347,6 +379,7 @@ desc_stat_RO_nuts2 <- GDP_RO_nuts2 |>
 ```
 
 ```{r}
+#| echo: false
 # To ensure the table do not contain previous grouping, we use the ungroup function. Moreover, we select desirable variable. Additional, the st fuction is utilised to compute summary statistics for the selected columns. Lastly, the summ-fuction specifies the summary statistics to calculate
 GDP_RO_nuts2 |> 
   ungroup() |> 
@@ -386,6 +419,7 @@ The research shows many examples of high- and low-income countries experiencing 
 ## GINI Coefficient Calculation
 
 ```{r}
+#| echo: false
 # Creating two new columns in the dataset merged_data called id_nuts2 and id_nuts0. Secondly, extracting the first four characters of the Sub_regions column and assigns it to the new id_nuts2 column, as well as the first two characters and assigns them to the new id_nuts0 column. Lastly, remove grouping. 
 merged_data <- merged_data %>%
   mutate(
@@ -401,6 +435,7 @@ merged_temp <- merged_data %>%
 ```
 
 ```{r}
+#| echo: false
 # Creating two new columns called id_nuts2 and id_nuts0. Secondly, extracting the first four characters of the Sub_regions column and assigns it to the new id_nuts2 column, as well as the first two characters and assigns them to the new id_nuts0 column. Lastly, choosing columns to be retained listed within the select function.
 merged_temp <- merged_temp %>%
   mutate(id_nuts2 = substr(Sub_regions, 1,4),
@@ -432,6 +467,7 @@ This means they do not have any GDP per capita [@eurostat2021].
 ### Germany
 
 ```{r}
+#| echo: false
 # Firstly, we create a new dataset called Gini_stat_DE_nuts2. 
 # Secondly, we filter the data to include only rows where the id_nuts2 variable is in the DE group. 
 # Thirdyly, after filtering, the data is grouped by the Year variable. This means that subsequent calculations will be performed separately for each year.
@@ -450,6 +486,7 @@ Gini_stat_DE_nuts2 <- merged_temp %>%
 ```
 
 ```{r}
+#| echo: false
 # Firstly, we add a table caption. 
 # Secondly, we remove grouping and then we add a new group containing year, min, max, median, mean, sd and var. 
 # Thirdly, we use kable to create a create nicely formatted table.
@@ -461,6 +498,10 @@ Gini_stat_DE_nuts2 |>
 ```
 
 ```{r}
+#| echo: false
+# Firstly, we add a table caption at the bottom of the figure. 
+# Secondly, we use the data from the dataset merged_temp and the function filter to ensure that the data we receive only represents Germany. 
+# Thirdly, we use the function ggplot to presentate the Gini coefficient numbers from Germany in a geom_point. 
 #| cap-location: bottom
 #| fig-cap: "Gini nuts2 DE."
 merged_temp |>
@@ -470,18 +511,23 @@ merged_temp |>
     y = gini_n2, 
     colour = id_nuts2)
     ) +
-  #geom_smooth(se = FALSE, snap = 0.9)
   geom_point()
 ```
 
 ### Finland
 
 ```{r}
-# Comments 
+#| echo: false
+# Creating a new value containing the Gini coefficient numbers from the regions at NUTS2 level in Finland.  
 FI <- c("FI19", "FI1B", "FI1C", "FI1D", "FI20")
 ```
 
 ```{r}
+#| echo: false
+# Firstly, we create a new dataset called Gini_stat_FI_nuts2. 
+# Secondly, we filter the data to include only rows where the id_nuts2 variable is in the FI group. 
+# Thirdyly, after filtering, the data is grouped by the Year variable. This means that subsequent calculations will be performed separately for each year.
+# Lastly, we use summarise to calculates summary statistics for the gini_n2 variable within each group (each year).
 Gini_stat_FI_nuts2 <- merged_temp %>%
   filter(id_nuts2 %in% FI) |> 
   group_by(Year) |> 
@@ -496,6 +542,10 @@ Gini_stat_FI_nuts2 <- merged_temp %>%
 ```
 
 ```{r}
+#| echo: false
+# Firstly, we add a table caption. 
+# Secondly, we remove grouping and then we add a new group containing year, min, max, median, mean, sd and var. 
+# Thirdly, we use kable to create a create nicely formatted table.
 #| tbl-cap: Descriptive statistics based on Gini coeffisient from NUTS2 level in Finland
 Gini_stat_FI_nuts2 |> 
   ungroup() |> 
@@ -504,6 +554,10 @@ Gini_stat_FI_nuts2 |>
 ```
 
 ```{r}
+#| echo: false
+# Firstly, we add a table caption at the bottom of the figure. 
+# Secondly, we use the data from the dataset merged_temp and the function filter to ensure that the data we receive only represents Finland 
+# Thirdly, we use the function ggplot to presentate the Gini coefficient numbers from Finland in a geom_point. 
 #| cap-location: bottom
 #| fig-cap: "Gini nuts2 FI."
 merged_temp |>
@@ -513,18 +567,23 @@ merged_temp |>
     y = gini_n2, 
     colour = id_nuts2)
     ) +
-  #geom_smooth(se = FALSE, snap = 0.9)
   geom_point()
 ```
 
 ### Romania
 
 ```{r}
-# Comments 
+#| echo: false
+# Creating a new value containing the Gini coefficient numbers from the regions at NUTS2 level in Romania  
 RO <- c("RO11", "RO12", "RO21", "RO22", "RO31", "RO32", "RO41", "RO42")
 ```
 
 ```{r}
+#| echo: false
+# Firstly, we create a new dataset called Gini_stat_RO_nuts2. 
+# Secondly, we filter the data to include only rows where the id_nuts2 variable is in the RO group. 
+# Thirdyly, after filtering, the data is grouped by the Year variable. This means that subsequent calculations will be performed separately for each year.
+# Lastly, we use summarise to calculates summary statistics for the gini_n2 variable within each group (each year).
 Gini_stat_RO_nuts2 <- merged_temp %>%
   filter(id_nuts2 %in% RO) |> 
   group_by(Year) |> 
@@ -539,6 +598,10 @@ Gini_stat_RO_nuts2 <- merged_temp %>%
 ```
 
 ```{r}
+#| echo: false
+# Firstly, we add a table caption. 
+# Secondly, we remove grouping and then we add a new group containing year, min, max, median, mean, sd and var. 
+# Thirdly, we use kable to create a create nicely formatted table.
 #| tbl-cap: Descriptive statistics based on Gini coeffisient from NUTS2 level in Romania
 Gini_stat_RO_nuts2 |> 
   ungroup() |> 
@@ -547,6 +610,10 @@ Gini_stat_RO_nuts2 |>
 ```
 
 ```{r}
+#| echo: false
+# Firstly, we add a table caption at the bottom of the figure. 
+# Secondly, we use the data from the dataset merged_temp and the function filter to ensure that the data we receive only represents Romania. 
+# Thirdly, we use the function ggplot to presentate the Gini coefficient numbers from Romania in a geom_point. 
 #| cap-location: bottom
 #| fig-cap: "Gini nuts2 RO."
 merged_temp |>
@@ -556,7 +623,6 @@ merged_temp |>
     y = gini_n2, 
     colour = id_nuts2)
     ) +
-  #geom_smooth(se = FALSE, snap = 0.9)
   geom_point()
 ```
 
