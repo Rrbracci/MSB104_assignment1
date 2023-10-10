@@ -162,6 +162,7 @@ GDP_DE_nuts2 <- merged_data %>%
 ```{r}
 # Since Germany contains many regions, we have deceided to present them in two new values.
 # DEz1North and DEz2SOUTH are the two values where we have devided Germany in South and North. 
+# Created a combined value consisting of the Northern and Southern part of Germany.
 DEz1NORTH <- c("DE30", "DE40", "DE50", "DE60", "DE80", "DE91", "DE92", "DE93", "DE94", "DEA1", "DEA2", "DEA3", "DEA4", "DEA5", "DEE0", "DEF0", "DEG0") 
 DEz2SOUTH <- c("DE11", "DE12", "DE13", "DE14", "DE21", "DE22", "DE23", "DE24", "DE25", "DE26", "DE27", "DE71", "DE72", "DE73", "DEB1", "DEB2", "DEB3", "DEC0", "DED2", "DED4", "DED5")
 DE <- c(DEz1NORTH, DEz2SOUTH)
@@ -171,7 +172,7 @@ DE <- c(DEz1NORTH, DEz2SOUTH)
 # First step is to place the location of the figure caption and name it.
 # Secondly, we filter GDP_DE_nuts2 to contain integer starting from 3 and ending with 4. Moreover, in this dataset we only contain vales larger or equal to 0, but less than 50.
 # Thirdly, we represent the data in GPD_DE_nuts2 by mapping them in a plot using ggplot, where the x-axis represents year and y-axis represents GPD_per_capita. Furthermore the colour is determined by id_nuts2.
-# Fourthly, we exclude the geom_smooth and instead use geom_line since this gives a accurate description of our data from Germany.
+# Fourthly, we use geom_line since this gives a accurate description of our data from Germany.
 #| cap-location: bottom
 #| fig-cap: "GDP per year."
 GDP_DE_nuts2 |>
@@ -183,11 +184,11 @@ GDP_DE_nuts2 |>
     y = GDP_per_capita_nuts2_DE, 
     colour = id_nuts2)
     ) +
-  #geom_smooth(se = FALSE, snap = 0.9)
   geom_line()
 ```
 
 ```{r}
+# Duplicating the same steps for Southern Germany as for the Northern part. 
 GDP_DE_nuts2 |>
   filter(
     id_nuts2 %in% DEz2SOUTH
@@ -197,7 +198,6 @@ GDP_DE_nuts2 |>
     y = GDP_per_capita_nuts2_DE, 
     colour = id_nuts2)
     ) +
-  #geom_smooth(se = FALSE, snap = 0.9)
   geom_line()
 ```
 
@@ -256,7 +256,7 @@ GDP_FI_nuts2 <- merged_data %>%
 # First step is to place the location of the figure caption and name it.
 # Secondly, we filter GDP_FI_nuts2 to contain integer starting from 3 and ending with 4. Moreover, in this dataset we only contain vales larger or equal to 0, but less than 50.
 # Thirdly, we represent the data in GPD_FI_nuts2 by mapping them in a plot using ggplot, where the x-axis represents year and y-axis represents GPD_per_capita. Furthermore the colour is determined by id_nuts2.
-# Fourthly, we exclude the geom_smooth and instead use geom_line since this gives a accurate description of our data from Finland
+# Fourthly, we use geom_line since this gives a accurate description of our data from Finland
 #| cap-location: bottom
 #| fig-cap: "GDP per year."
 GDP_FI_nuts2 |>
@@ -265,7 +265,6 @@ GDP_FI_nuts2 |>
     y = GDP_per_capita_nuts2_FI, 
     colour = id_nuts2)
     ) +
-  #geom_smooth(se = FALSE, snap = 0.9)
   geom_line()
 ```
 
@@ -320,7 +319,7 @@ GDP_RO_nuts2 <- merged_data %>%
 # First step is to place the location of the figure caption and name it.
 # Secondly, we filter GDP_RO_nuts2 to contain integer starting from 3 and ending with 4. Moreover, in this dataset we only contain vales larger or equal to 0, but less than 50.
 # Thirdly, we represent the data in GPD_RO_nuts2 by mapping them in a plot using ggplot, where the x-axis represents year and y-axis represents GPD_per_capita. Furthermore the colour is determined by id_nuts2.
-# Fourthly, we exclude the geom_smooth and instead use geom_line since this gives a accurate description of our data from Romania
+# Fourthly, we use geom_line since this gives a accurate description of our data from Romania
 #| cap-location: bottom
 #| fig-cap: "GDP per year."
 GDP_RO_nuts2 |>
@@ -329,7 +328,6 @@ GDP_RO_nuts2 |>
     y = GDP_per_capita_nuts2_RO, 
     colour = id_nuts2)
     ) +
-  #geom_smooth(se = FALSE, snap = 0.9)
   geom_line()
 ```
 
@@ -434,27 +432,32 @@ This means they do not have any GDP per capita [@eurostat2021].
 ### Germany
 
 ```{r}
+# Firstly, we create a new dataset called Gini_stat_DE_nuts2. 
+# Secondly, we filter the data to include only rows where the id_nuts2 variable is in the DE group. 
+# Thirdyly, after filtering, the data is grouped by the Year variable. This means that subsequent calculations will be performed separately for each year.
+# Lastly, we use summarise to calculates summary statistics for the gini_n2 variable within each group (each year). 
 Gini_stat_DE_nuts2 <- merged_temp %>%
   filter(id_nuts2 %in% DE) |> 
   group_by(Year) |> 
   summarise(
-    min_Gini_each_year = min(gini_n2),
-    max_Gini_each_year = max(gini_n2),
-    median_Gini_each_year = median(gini_n2),
-    mean_Gini_each_year = mean(gini_n2),
-    sd_Gini_each_year = sd(gini_n2),
-    var_Gini_each_year = sd_Gini_each_year^2
+    min = min(gini_n2),
+    max = max(gini_n2),
+    median = median(gini_n2),
+    mean = mean(gini_n2),
+    sd = sd(gini_n2),
+    var = sd^2
   )
 ```
 
 ```{r}
+# Firstly, we add a table caption. 
+# Secondly, we remove grouping and then we add a new group containing year, min, max, median, mean, sd and var. 
+# Thirdly, we use kable to create a create nicely formatted table.
+#| tbl-cap: Descriptive statistics based on Gini coeffisient from NUTS2 level in Germany
 Gini_stat_DE_nuts2 |> 
   ungroup() |> 
-  select(Year, min_Gini_each_year, max_Gini_each_year, median_Gini_each_year, mean_Gini_each_year, sd_Gini_each_year, var_Gini_each_year) |> 
-  st(group = "Year", group.long = TRUE, 
-     summ = c('notNA(x)','mean(x)', 'median(x)', 
-              'sd(x)','min(x)','max(x)'),
-     )
+  select(Year, min, max, median, mean, sd, var) %>%
+  kable(digits = 5)
 ```
 
 ```{r}
@@ -483,13 +486,21 @@ Gini_stat_FI_nuts2 <- merged_temp %>%
   filter(id_nuts2 %in% FI) |> 
   group_by(Year) |> 
   summarise(
-    min_Gini_each_year = min(gini_n2),
-    max_Gini_each_year = max(gini_n2),
-    median_Gini_each_year = median(gini_n2),
-    mean_Gini_each_year = mean(gini_n2),
-    sd_Gini_each_year = sd(gini_n2),
-    var_Gini_each_year = sd_Gini_each_year^2
+    min = min(gini_n2),
+    max = max(gini_n2),
+    median = median(gini_n2),
+    mean = mean(gini_n2),
+    sd = sd(gini_n2),
+    var = sd^2
   )
+```
+
+```{r}
+#| tbl-cap: Descriptive statistics based on Gini coeffisient from NUTS2 level in Finland
+Gini_stat_FI_nuts2 |> 
+  ungroup() |> 
+  select(Year, min, max, median, mean, sd, var) %>%
+  kable(digits = 5)
 ```
 
 ```{r}
@@ -518,13 +529,21 @@ Gini_stat_RO_nuts2 <- merged_temp %>%
   filter(id_nuts2 %in% RO) |> 
   group_by(Year) |> 
   summarise(
-    min_Gini_each_year = min(gini_n2),
-    max_Gini_each_year = max(gini_n2),
-    median_Gini_each_year = median(gini_n2),
-    mean_Gini_each_year = mean(gini_n2),
-    sd_Gini_each_year = sd(gini_n2),
-    var_Gini_each_year = sd_Gini_each_year^2
+    min = min(gini_n2),
+    max = max(gini_n2),
+    median = median(gini_n2),
+    mean = mean(gini_n2),
+    sd = sd(gini_n2),
+    var = sd^2
   )
+```
+
+```{r}
+#| tbl-cap: Descriptive statistics based on Gini coeffisient from NUTS2 level in Romania
+Gini_stat_RO_nuts2 |> 
+  ungroup() |> 
+  select(Year, min, max, median, mean, sd, var) %>%
+  kable(digits = 5)
 ```
 
 ```{r}
