@@ -1,6 +1,6 @@
 ---
-title: "MSB104_assignment1"
-author: "Rrbracci & AGaard01"
+title: "Assignment 1: Data and Descriptive"
+author: "Asbjørn Gaard & René Rødde Bracci"
 format: html
 editor: visual
 bibliography: [MSB104_Assignment1.bib]
@@ -21,7 +21,6 @@ library(ggplotify)
 library(vtable)
 library(dplyr)
 library(dineq)
-library(quarto)
 ```
 
 # Sub-national GDP and GDP per Capita
@@ -98,7 +97,7 @@ According to @eurostat2021, the dataset of demography is a set of statistical nu
 Furthermore, the definition of "population" is, according to @eurostat2021, all persons having their residences in a member state, including all live births and deaths during the year when the statistical numbers are heading to Eurostat.
 Moreover, the demographic data at a regional level are separated into different groups named NUTS, which are defined as nomenclature for territorial units for statistics [@eurostat2021].
 The purpose of the NUTS function is to subdivide the territory of the European Union into 104 regions at NUTS level 1 and break it down by to 281 at NUTS level 2 and 1348 at NUTS level 3 [@eurostat2021].
-In this paper, we have focused on the numbers of NUTS 3 level, but the dataset containing population data has been broken down by sex and broad age groups (0-14, 15-64 and 65 or more).
+In the beginning of this paper, we have focused on the numbers of NUTS 3 level, but the dataset containing population data has been broken down by sex and broad age groups (0-14, 15-64 and 65 or more).
 
 The following dataset we downloaded from Eurostat was the **nama_10r_3gdp dataset**.
 Furthermore, this dataset is also broken down to NUTS level 3 which focus on GDP data from the sub-regions in Finland, Germany and Romania.
@@ -144,9 +143,9 @@ The first step in calculating GDP per capita for each sub-region, was to merge t
 We named the new dataset merged_data.
 Furthermore, we started with transforming the new dataset by creating a new column called GDP_per_capita.
 We calculated GDP per capita by using the formula GDP divided by Population, but to view more presentable numbers, we multiplied the formula with 1 000 000 since we want to provide GDP per capita in million EURO.
-Lastly, we created a another new dataset called merged_data_GDP_PC and provided the summary function to get an overview of various summary statistics and information for each column in the merged_data_GDP_PC dataset.
+Lastly, we created another new dataset called merged_data_GDP_PC and provided the summary function to get an overview of various summary statistics and information for each column in the merged_data_GDP_PC dataset.
 
-## Descriptive Analysis:
+## Descriptive Analysis
 
 ### Germany
 
@@ -252,15 +251,15 @@ GDP_DE_nuts2 |>
 
 In order to achieve a presentable figure showing GDP per year for the German sub-regions, we decided to divide the data into Northern and Southern Germany.
 This prevented the data from becoming overly clustered and improved our ability to interpret the graphs.
-The first figure presents data for North Germany, and the second figure presents data for South Germany.
+The first figure presents data for Northern Germany, and the second figure presents data for Southern Germany.
 
 In @fig-regional_gdp_per_year_NG we see that there is a relatively similar trend in GDP growth per year from 2000 to 2020, with the exception of one outlier.
 This is the top graph which has a much higher GDP per capita than the other regions.
-This region is Hamburg (DE60), which is located in North Germany, which had a GDP per capita of 45,659 € in 2000, and 64,366 € in 2020.
+This region is Hamburg (DE60), which is located in Northern Germany, which had a GDP per capita of 45,659 € in 2000, and 64,366 € in 2020.
 Hamburg is home to a diverse range of industries, including maritime trade, logistics, manufacturing, aviation, and media.
 Also, the Port of Hamburg is one of Europe's largest and busiest ports.
 
-The region with the lowest GDP per capita was Thüringen (DEG0), which is located in North Germany, with a GDP of 16,139 € in 2000, and 28,874 € in 2020.
+The region with the lowest GDP per capita was Thüringen (DEG0), which is located in Northern Germany, with a GDP of 16,139 € in 2000, and 28,874 € in 2020.
 Thüringen has a relatively small and less diversified economy compared to other German states.
 It relies heavily on traditional industries such as agriculture and manufacturing, which may not contribute significantly to GDP.
 We also note that there is a significant fall in GDP per capita in 2010 for the region Mecklenburg-Vorpommern (DE80).
@@ -354,11 +353,13 @@ GDP_FI_nuts2 |>
 
 #### Description of the numbers from Finnish regions
 
-In @fig-regional_gdp_per_year_FI we see that there is a relatively similar trend in GDP growth per year from 2000 to 2020, with the exception of one outlier.
-This is the top graph which has a much higher GDP per capita than the other regions.
+In @fig-regional_gdp_per_year_FI we see that there is a relatively similar trend in GDP growth per year from 2000 to 2020, with the exception of two outliers.
+The first one is the graph at the top which has a much higher GDP per capita than the other regions.
 This region is Helsinki-Uusimaa (FI1B) which had a GDP per capita of 36,478 € in 2000, and 55,750 € in 2020.
 Helsinki, the capital of Finland, is located in the Uusimaa region.
 Being the largest city and the national capital, Helsinki serves as the economic, financial, and cultural center of Finland.
+Furthermore, the region FI20 (Åland) experience a significant drop in GDP per capita from year 2017 to 2020.
+We assume that one of the reason of this drop in GDP per capita is regarding the pandemic resulting in less tourist visits on Åland.
 
 The region with the lowest GDP per capita was Pohjois- ja Itä-Suomi (FI1D), with a GDP of 20,605 € in 2000, and 36,072 € in 2020.
 Pohjois- ja Itä-Suomi is located in Northern and Eastern Finland, which characterized by their vast, sparsely populated areas and harsh climatic conditions.
@@ -366,6 +367,7 @@ These factors can limit economic activities in certain sectors.
 
 In Finland in 2000, while the average GDP per capita was 27,201 €, there was moderate income inequality, with some segments of the population earning significantly more or less than the average.
 The difference between the mean (€27,201) and median (24,523 €) implies the presence of relatively high-income individuals or regions that influenced the mean value.
+The standard deviation of X € is probably caused by the two outliers, which has ...
 
 In Finland in 2020, while the average GDP per capita was 41,669 €, there was a noticeable level of income inequality.
 Some segments of the population earned significantly more or less than the average, as evidenced by the difference between the mean (41,669 €) and median (38,178€).
