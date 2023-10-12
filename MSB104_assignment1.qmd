@@ -31,7 +31,7 @@ library(dineq)
 
 ```{r}
 #| echo: false
-# Downloaded file for population in DE (Germany), FI (Finland) and RO (Romania). Furthermore, we load up the file i RStudio by import the file in Library(readr). Moreover, we commended RStudio to read the file "demo_r_pjanaggr3_page_linear_csv". Additionally, we implemented the function na = "NA" for RStudio to read the missing values. Lastly, we added the function "show_col_types = FALSE" to prevent RStudio displaying the column data types while reading the file. 
+# Downloaded file for population in DE (Germany), FI (Finland) and RO (Romania). Furthermore, we load up the file i RStudio by import the file in Library(readr). Moreover, we commended RStudio to read the file "demo_r_pjanaggr3_page_linear_csv". Additionally, we implement the function na = "NA" for RStudio to read the missing values. Lastly, we add the function "show_col_types = FALSE" to prevent RStudio displaying the column data types while reading the file. 
 library(readr)
 demo_r_pjanaggr3_page_linear_csv <- read_csv("demo_r_pjanaggr3_page_linear.csv.gz", 
     na = "NA", show_col_types = FALSE)
@@ -39,7 +39,7 @@ demo_r_pjanaggr3_page_linear_csv <- read_csv("demo_r_pjanaggr3_page_linear.csv.g
 
 ```{r}
 #| echo: false
-# First step was to rename the file for the assigned countries (DE, FI & RO). Furthermore, we utilized the function filter with str_sub considering a better overview of relevant dataset. Lastly, we were interested in population in every sub_regionals in the relevant contries. To receive and organise the relevant data, the function "Select" was used.  
+# First step is to rename the file for the assigned countries (DE, FI & RO). Furthermore, we utilize the function filter with str_sub considering a better overview of relevant dataset. Lastly, we are interested in population in every sub_regionals in the relevant contries. To receive and organise the relevant data, the function "Select" is used.  
 DE_FI_RO_pop <- demo_r_pjanaggr3_page_linear_csv |>
 	filter(str_sub
 	       (geo, start = 1L, end = 2L) %in% c("DE", "FI", "RO")) |>
@@ -62,7 +62,7 @@ DE_FI_RO_pop |>
 
 ```{r}
 #| echo: false
-# Downloaded file for GDP in DE (Germany), FI (Finland) and RO (Romania). Furthermore, we load up the file i RStudio by import the file in Library(readr). Moreover, we commended RStudio to read the file "nama_10r_3gdp_page_linear_csv". Additionally, we implemented the function na = "NA" for RStudio to read the missing values. Lastly, we added the function "show_col_types = FALSE" to prevent RStudio displaying the column data types while reading the file. 
+# Download file for GDP in DE (Germany), FI (Finland) and RO (Romania). Furthermore, we load up the file i RStudio by import the file in Library(readr). Moreover, we commend RStudio to read the file "nama_10r_3gdp_page_linear_csv". Additionally, we implement the function na = "NA" for RStudio to read the missing values. Lastly, we add the function "show_col_types = FALSE" to prevent RStudio displaying the column data types while reading the file. 
 library(readr)
 nama_10r_3gdp_page_linear_csv <- read_csv("nama_10r_3gdp_page_linear.csv.gz", 
     na = "NA", show_col_types = FALSE)
@@ -70,7 +70,7 @@ nama_10r_3gdp_page_linear_csv <- read_csv("nama_10r_3gdp_page_linear.csv.gz",
 
 ```{r}
 #| echo: false
-# First step was to rename the file for the assigned countries (DE, FI & RO). Furthermore, we utilized the function filter with str_sub considering a better overview of relevant dataset. Lastly, we were interested in population in every sub_regionals in the relevant contries. To receive and organise the relevant data, the function "Select" was used.  
+# First step is to rename the file for the assigned countries (DE, FI & RO). Furthermore, we utilize the function filter with str_sub considering a better overview of relevant dataset. Lastly, we are interested in population in every sub_regionals in the relevant contries. To receive and organise the relevant data, the function "Select" is used.  
 DE_FI_RO_gdp <- nama_10r_3gdp_page_linear_csv |>
 	filter(str_sub
 	       (geo, start = 1L, end = 2L) %in% c("DE", "FI", "RO")) |>
@@ -152,8 +152,8 @@ Lastly, we created another new dataset called merged_data_GDP_PC and provided th
 ```{r}
 #| echo: false
 #| warning: false
-# Created new dataset called GDP_DE_nuts2.
-# Filtered sub-regions from Germany by using str_sub to extract a substring from the Sub_regions columns containing the letters DE for Germany.
+# Create new dataset called GDP_DE_nuts2.
+# Filter sub-regions from Germany by using str_sub to extract a substring from the Sub_regions columns containing the letters DE for Germany.
 # Creating new column called id_nuts2 to save the new data for calculating Gini coefficient, for presenting the numbers of regional inequity in Germany at NUTS2 level.
 # Next step is to group the numbers of NUTS2 level sorted by the the code of the region in NUTS2 level and year.
 # Finally summarise the Gini coefficient numbers of each German region in NUTS2 level by multiplying 1 000 000 with GDP divided by population. 
@@ -186,7 +186,7 @@ DE <- c(DEz1NORTH, DEz2SOUTH)
 #| cap-location: bottom
 #| fig-cap: "GDP per capita in year - Northern Germany"
 # First step is to place the location of the figure caption and name it.
-# Secondly, we filter GDP_DE_nuts2 to contain integer starting from 3 and ending with 4. Moreover, in this dataset we only contain vales larger or equal to 0, but less than 50.
+# Secondly, we filter GDP_DE_nuts2 to contain the values in Northern Germany (DEz1NORTH) from column id_nuts2.
 # Thirdly, we represent the data in GPD_DE_nuts2 by mapping them in a plot using ggplot, where the x-axis represents year and y-axis represents GPD_per_capita. Furthermore the colour is determined by id_nuts2.
 # Fourthly, we use geom_line since this gives a accurate description of our data from Germany.
 GDP_DE_nuts2 |>
@@ -206,7 +206,7 @@ GDP_DE_nuts2 |>
 #| echo: false
 #| #| cap-location: bottom
 #| fig-cap: "GDP per capita in year - Southern Germany"
-# Duplicating the same steps for Southern Germany as for the Northern part. 
+# Duplicating the same steps for Southern Germany (DEz2SOUTH) as for the Northern part. 
 GDP_DE_nuts2 |>
   filter(
     id_nuts2 %in% DEz2SOUTH
@@ -287,8 +287,8 @@ There is also a slope in both figures in 2019, which is most likely due to Covid
 ```{r}
 #| echo: false
 #| warning: false
-# Created new dataset called GDP_FI_nuts2.
-# Filtered sub-regions from Finland by using str_sub to extract a substring from the Sub_regions columns containing the letters FI for Finland
+# Create new dataset called GDP_FI_nuts2.
+# Filter sub-regions from Finland by using str_sub to extract a substring from the Sub_regions columns containing the letters FI for Finland.
 # Creating new column called id_nuts2 to save the new data for calculating Gini coefficient, for presenting the numbers of regional inequity in Finland at NUTS2 level.
 # Next step is to group the numbers of NUTS2 level sorted by the the code of the region in NUTS2 level and year.
 # Finally summarise the Gini coefficient numbers of each Finnish region in NUTS2 level by multiplying 1 000 000 with GDP divided by population. 
@@ -311,7 +311,7 @@ GDP_FI_nuts2 <- merged_data %>%
 #| #| cap-location: bottom
 #| fig-cap: "GDP per capita in year - Finland"
 # First step is to place the location of the figure caption and name it.
-# Secondly, we filter GDP_FI_nuts2 to contain integer starting from 3 and ending with 4. Moreover, in this dataset we only contain vales larger or equal to 0, but less than 50.
+# Secondly, we filter GDP_FI_nuts2 to contain the regions in Finland from column id_nuts2.
 # Thirdly, we represent the data in GPD_FI_nuts2 by mapping them in a plot using ggplot, where the x-axis represents year and y-axis represents GPD_per_capita. Furthermore the colour is determined by id_nuts2.
 # Fourthly, we use geom_line since this gives a accurate description of our data from Finland
 GDP_FI_nuts2 |>
@@ -381,8 +381,8 @@ From year 2015 until 2020, we can see an reduction in standard deviation which i
 ```{r}
 #| echo: false
 #| warning: false
-# Created new dataset called GDP_RO_nuts2.
-# Filtered sub-regions from Romania by using str_sub to extract a substring from the Sub_regions columns containing the letters RO for Romania
+# Create new dataset called GDP_RO_nuts2.
+# Filter sub-regions from Romania by using str_sub to extract a substring from the Sub_regions columns containing the letters RO for Romania
 # Creating new column called id_nuts2 to save the new data for calculating Gini coefficient, for presenting the numbers of regional inequity in Romania at NUTS2 level.
 # Next step is to group the numbers of NUTS2 level sorted by the the code of the region in NUTS2 level and year.
 # Finally summarise the Gini coefficient numbers of each Romanian region in NUTS2 level by multiplying 1 000 000 with GDP divided by population. 
@@ -405,7 +405,7 @@ GDP_RO_nuts2 <- merged_data %>%
 #| #| cap-location: bottom
 #| fig-cap: "GDP per capita in year - Romania"
 # First step is to place the location of the figure caption and name it.
-# Secondly, we filter GDP_RO_nuts2 to contain integer starting from 3 and ending with 4. Moreover, in this dataset we only contain vales larger or equal to 0, but less than 50.
+# Secondly, we filter GDP_RO_nuts2 to contain the regions in Romania from column id_nuts2.
 # Thirdly, we represent the data in GPD_RO_nuts2 by mapping them in a plot using ggplot, where the x-axis represents year and y-axis represents GPD_per_capita. Furthermore the colour is determined by id_nuts2.
 # Fourthly, we use geom_line since this gives a accurate description of our data from Romania
 GDP_RO_nuts2 |>
@@ -549,7 +549,7 @@ Moreover, we assume that the zero values can also be a result of missing data re
 #| echo: false
 # Firstly, we create a new dataset called Gini_stat_DE_nuts2. 
 # Secondly, we filter the data to include only rows where the id_nuts2 variable is in the DE group. 
-# Thirdyly, after filtering, the data is grouped by the Year variable. This means that subsequent calculations will be performed separately for each year.
+# Thirdly, after filtering, the data is grouped by the Year variable. This means that subsequent calculations will be performed separately for each year.
 # Lastly, we use summarise to calculates summary statistics for the gini_n2 variable within each group (each year). 
 Gini_stat_DE_nuts2 <- merged_temp %>%
   filter(id_nuts2 %in% DE) |> 
@@ -606,7 +606,7 @@ FI <- c("FI19", "FI1B", "FI1C", "FI1D", "FI20")
 #| echo: false
 # Firstly, we create a new dataset called Gini_stat_FI_nuts2. 
 # Secondly, we filter the data to include only rows where the id_nuts2 variable is in the FI group. 
-# Thirdyly, after filtering, the data is grouped by the Year variable. This means that subsequent calculations will be performed separately for each year.
+# Thirdly, after filtering, the data is grouped by the Year variable. This means that subsequent calculations will be performed separately for each year.
 # Lastly, we use summarise to calculates summary statistics for the gini_n2 variable within each group (each year).
 Gini_stat_FI_nuts2 <- merged_temp %>%
   filter(id_nuts2 %in% FI) |> 
@@ -663,7 +663,7 @@ RO <- c("RO11", "RO12", "RO21", "RO22", "RO31", "RO32", "RO41", "RO42")
 #| echo: false
 # Firstly, we create a new dataset called Gini_stat_RO_nuts2. 
 # Secondly, we filter the data to include only rows where the id_nuts2 variable is in the RO group. 
-# Thirdyly, after filtering, the data is grouped by the Year variable. This means that subsequent calculations will be performed separately for each year.
+# Thirdly, after filtering, the data is grouped by the Year variable. This means that subsequent calculations will be performed separately for each year.
 # Lastly, we use summarise to calculates summary statistics for the gini_n2 variable within each group (each year).
 Gini_stat_RO_nuts2 <- merged_temp %>%
   filter(id_nuts2 %in% RO) |> 
