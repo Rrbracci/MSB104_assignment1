@@ -1,7 +1,7 @@
 ---
 title: "Assignment 1: Data and Descriptive"
 author: "Asbjørn Gaard & René Rødde Bracci"
-format: html
+format: pdf
 editor: visual
 bibliography: [MSB104_Assignment1.bib]
 ---
@@ -245,6 +245,7 @@ GDP_DE_nuts2 |>
      summ = c('notNA(x)','mean(x)', 'median(x)', 
               'sd(x)','min(x)','max(x)'),
      )
+  
 ```
 
 #### Description of the numbers from German regions
@@ -727,7 +728,8 @@ Taking this into account as well, this might describe why the Gini Coefficient i
 
 Regarding the region with the lowest Gini coefficient, we find regions in the NUT2 level where the Gini coefficient was zero.
 This is also why the minimum value shows a value of zero.
-The regions we discovered in this case were Leipzig (DED5), Chemnitz (DED4), Dresden (DED2), Hamburg (DE60) and Berlin (DE30) @eurostat2022. We assume that, in reality, there is no chance for perfect regional equality, and the reason for the Gini coefficient showing a value of zero might indicate that there is missing reported data from these regions.
+The regions we discovered in this case were Leipzig (DED5), Chemnitz (DED4), Dresden (DED2), Hamburg (DE60) and Berlin (DE30) @eurostat2022.
+We assume that, in reality, there is no chance for perfect regional equality, and the reason for the Gini coefficient showing a value of zero might indicate that there is missing reported data from these regions.
 Moreover, when it comes to standard deviation, it is the year 2016 that stands out.
 This indicates that some regions operate with a more significant Gini coefficient than the average of regions in Germany.
 According to our calculations, the region that stands out is DE91 (Braunschweig).
@@ -763,6 +765,20 @@ Furthermore, the region with the highest regional inequality in Romania was Bucu
 The same region experienced the lowest regional inequality in 2006.
 Moreover, the median and mean are relatively similar which indicate that the Gini coefficient do not contains any significant extreme value.
 Lastly, the low standard deviation indicates that the regional inequalities in Romania are close to the average of regional inequalities the different regions experience.
+
+# Appendix
+
+```{r}
+#| echo: false
+# To ensure the table do not contain previous grouping, we use the ungroup function. Moreover, we select desirable variable. Additional, the st fuction is utilised to compute summary statistics for the selected columns. Lastly, the summ-fuction specifies the summary statistics to calculate
+GDP_DE_nuts2 |> 
+  ungroup() |> 
+  select(Year, GDP_pc = GDP_per_capita_nuts2_DE) |> 
+  st(group = "Year", group.long = TRUE, 
+     summ = c('notNA(x)','mean(x)', 'median(x)', 
+              'sd(x)','min(x)','max(x)'),
+     )
+```
 
 ```{r}
 #| echo: false
