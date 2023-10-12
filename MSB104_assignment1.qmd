@@ -21,6 +21,7 @@ library(ggplotify)
 library(vtable)
 library(dplyr)
 library(dineq)
+library(quarto)
 ```
 
 # Sub-national GDP and GDP per Capita
