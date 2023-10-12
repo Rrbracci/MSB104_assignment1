@@ -367,12 +367,14 @@ These factors can limit economic activities in certain sectors.
 
 In Finland in 2000, while the average GDP per capita was 27,201 €, there was moderate income inequality, with some segments of the population earning significantly more or less than the average.
 The difference between the mean (€27,201) and median (24,523 €) implies the presence of relatively high-income individuals or regions that influenced the mean value.
-The standard deviation of X € is probably caused by the two outliers, which has ...
 
 In Finland in 2020, while the average GDP per capita was 41,669 €, there was a noticeable level of income inequality.
 Some segments of the population earned significantly more or less than the average, as evidenced by the difference between the mean (41,669 €) and median (38,178€).
 The presence of a right-skewed distribution indicates the influence of relatively high-income individuals or regions on the mean value.
 Also in the graphs for Finland we see the effects on GDP of the Financial Crisis (2007-2008) and Covid-19.
+Lastly, the devlopement in standard deviation from year 2000 until 2015 indicates that some regions stands out from the average GDP per capita.
+These regions are FI20 (Åland) and FI1B (Helsinki-Uusimaa).
+From year 2015 until 2020, we can see an reduction in standard deviation which indicates that the GDP per capita in different regions in Finland is more close to the average of GDP per capita in the country.
 
 ### Romania
 
@@ -445,10 +447,10 @@ GDP_RO_nuts2 |>
 
 #### Description of the numbers from Romanian regions
 
-In @fig-regional_gdp_per_year_RO we see that there is a relatively similar trend in GDP growth per year from 2000 to 2020, with the exception of one outlier.
+In @fig-regional_gdp_per_year_RO we see that there is a very similar trend in GDP growth per year from 2000 to 2020, with the exception of one outlier.
 This is the top graph which has a much higher GDP per capita than the other regions.
 This region is București-Ilfov (RO32), which had a GDP of 3972 €, and 26,270 € in 2020.
-București (Bucharest) is not only the capital city of Romania but also its economic and financial center.
+București (Bucharest) is not only the capital city of Romania, but also its economic and financial center.
 As the capital, it serves as the hub for government institutions, businesses, and financial organizations.
 
 The region with the lowest GDP per capita was Nord-Est (RO21), with a GDP of 1253 € in 2000, and 7478 € in 2020.
@@ -460,6 +462,8 @@ The median (1619 €), being lower than the mean (1889 €), hints at the presen
 In 2020, the average GDP per capita was around 11,628 €, however there is still significant variation in income levels across different regions or segments of the population.
 The median (9822 €), being lower than the mean (11,628 €), hints at the presence of income inequality or disparities in economic well-being.
 Also in the graphs for Romania we see the effects on GDP of the Financial Crisis (2007-2008) and Covid-19.
+Lastly, the development in standard deviation from year 2000 until 2008 indicates that the region București-Ilfov (RO32) stands out from the average GDP per capita, but the drop in 2008 is maybe a result of the financial crisis.
+On the other hand, the same region has a an increase in the standard deviation from year 2009 to 2020 due to the GDP per capita in RO32 București-Ilfov increases more than the average of GDP per capita in remaining regions in Romania.
 
 # Regional inequity
 
@@ -484,7 +488,7 @@ An example is regions in a country that experience increasing aid.
 Receiving assistance from foreign aid organisations creates inequality.
 Lastly, @lessmann_and_seidel2017 state that an area where ethnic groups dominate as a minority can result in regional inequity.
 
-Based on the research conducted by , considering regional inequities is essential since it can influence economic outcomes.
+Based on the research conducted by @lessmann_and_seidel2017, considering regional inequities is essential since it can influence economic outcomes.
 The research shows many examples of high- and low-income countries experiencing unbalanced regional development that results in income inequality [@lessmann_and_seidel2017].
 
 ## GINI Coefficient Calculation
@@ -533,8 +537,9 @@ A Gini coefficient close to 1 signifies a high level of income or wealth inequal
 In societies with high Gini coefficients, a significant portion of the income or wealth is concentrated among a small percentage of the population, leading to pronounced disparities.
 These societies may have a large gap between the rich and the poor, with some individuals or households having substantially more resources than others [@imfnd].
 
-The zero values occur as a result of regions like in Germany where the regions is actually an foreign embassy, army base or offshore energy prodution with no permanent residence.
+The zero values occur as a result of some regions are actually defined as a region, but in reality they are a foreign embassy, army base or offshore energy production with no permanent residence.
 This means they do not have any GDP per capita [@eurostat2021].
+Moreover, we assume that the zero values can also be a result of missing data report from different regions in Germany and Finland.
 
 ## Data presentation
 
@@ -575,7 +580,7 @@ Gini_stat_DE_nuts2 |>
 #| label: fig-regional_gini_per_year_RO
 #| echo: false
 #| #| cap-location: bottom
-#| fig-cap: "GDP per capita in year - Romania"
+#| fig-cap: "GDP per capita in year - Germany"
 # Firstly, we add a table caption at the bottom of the figure. 
 # Secondly, we use the data from the dataset merged_temp and the function filter to ensure that the data we receive only represents Germany. 
 # Thirdly, we use the function ggplot to presentate the Gini coefficient numbers from Germany in a geom_point. 
